@@ -9,6 +9,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_bloc: ^9.1.1
   page_flip: ^0.2.5+1
+  flutter_localization: ^0.3.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

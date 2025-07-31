@@ -1,15 +1,14 @@
 import 'package:exam_practice_app/lang/en.dart';
+import 'package:exam_practice_app/utility/appTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 void main() {
-
   MultiBlocProvider(
     providers: [
       // Add your Bloc providers here
     ],
     child: const MyApp(),
   );
-
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
@@ -20,21 +19,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: AppTextEn.appName,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: themData,
       home: const MyHomePage(title: AppTextEn.welcomeMessage),
     );
   }
 }
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
