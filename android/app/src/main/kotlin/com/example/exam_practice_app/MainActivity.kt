@@ -1,4 +1,4 @@
-package com.example.exam_practice_app
+package com.exam_bank_app
 
 import io.flutter.embedding.android.FlutterActivity
 

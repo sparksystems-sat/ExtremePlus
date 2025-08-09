@@ -1,0 +1,11 @@
+ {
+  "appName":"Exam Practice App",
+  "welcomeMessage":"Welcome to the Exam Practice App!",
+  "startExam":"Start Exam",
+  "viewResults" :"View Results",
+  "settings":"Settings",
+  "exit":"Exit",
+  "examInstructions":"Please read the instructions carefully before starting the exam.",
+  "submitExam":"Submit Exam",
+  "examSubmitted":"Your exam has been submitted successfully!"
+}
