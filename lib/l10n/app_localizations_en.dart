@@ -12,6 +12,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'Exam Practice App';
 
   @override
+  String get bottom_home => 'Home';
+
+  @override
+  String get bottom_book_mark => 'Book Mark';
+
+  @override
+  String get bottom_offline => 'Offline';
+
+  @override
+  String get bottom_profile => 'profile';
+
+  @override
   String get welcomeMessage => 'Welcome to the Exam Practice App!';
 
   @override

@@ -9,9 +9,9 @@ var themData = ThemeData(
     bodyLarge: TextStyle(color: AppColors.text_color),
   ),
   scaffoldBackgroundColor: AppColors.main_background_color,
-  appBarTheme: AppBarTheme(color: AppColors.primaryColor),
+  appBarTheme: AppBarTheme(color: AppColors.text_color),
   iconTheme: IconThemeData(color: AppColors.icon_color),
-  primaryColor: AppColors.primaryColor,
+  primaryColor: AppColors.icon_color,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: AppColors.primaryColor,

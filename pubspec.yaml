@@ -11,9 +11,11 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_bloc: ^9.1.1
   page_flip: ^0.2.5+1
-  get:
+  get: ^4.7.2
   # flutter_localization: ^0.3.3
   font_awesome_flutter: ^10.9.0
+  provider: ^6.1.5
+  motion_tab_bar:
 dev_dependencies:
   flutter_test:
     sdk: flutter

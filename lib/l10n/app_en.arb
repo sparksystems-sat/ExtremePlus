@@ -1,5 +1,9 @@
  {
   "appName":"Exam Practice App",
+  "bottom_home":"Home", 
+  "bottom_book_mark":"Book Mark",
+  "bottom_offline":"Offline",
+  "bottom_profile":"profile",
   "welcomeMessage":"Welcome to the Exam Practice App!",
   "startExam":"Start Exam",
   "viewResults" :"View Results",

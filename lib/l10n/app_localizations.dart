@@ -101,6 +101,30 @@ abstract class AppLocalizations {
   /// **'Exam Practice App'**
   String get appName;
 
+  /// No description provided for @bottom_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get bottom_home;
+
+  /// No description provided for @bottom_book_mark.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Mark'**
+  String get bottom_book_mark;
+
+  /// No description provided for @bottom_offline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get bottom_offline;
+
+  /// No description provided for @bottom_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'profile'**
+  String get bottom_profile;
+
   /// No description provided for @welcomeMessage.
   ///
   /// In en, this message translates to:

@@ -29,7 +29,6 @@ class Language {
     ];
   }
 }
-
 Future<Locale> setLocale(String languageCode) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString(LAGUAGE_CODE, languageCode);
@@ -41,7 +40,6 @@ Future<String> getLocale() async {
   String languageCode = prefs.getString(LAGUAGE_CODE) ?? ENGLISH;
   return languageCode;
 }
-
 Locale _locale(String languageCode) {
   switch (languageCode) {
     case ENGLISH:
@@ -49,10 +47,10 @@ Locale _locale(String languageCode) {
     case AMHARIC:
       return const Locale(AMHARIC, "");
     default:
-      return const Locale(AMHARIC, '');
+      return const Locale(ENGLISH, '');
   }
 }
+AppLocalizations lang(BuildContext context) {
 
-AppLocalizations t(BuildContext context) {
   return AppLocalizations.of(context)!;
 }
