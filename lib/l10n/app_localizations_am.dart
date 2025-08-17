@@ -9,25 +9,25 @@ class AppLocalizationsAm extends AppLocalizations {
   AppLocalizationsAm([String locale = 'am']) : super(locale);
 
   @override
-  String get appName => 'Exam Practice App';
+  String get appName => 'Exam Practice App አ';
 
   @override
-  String get bottom_home => 'Home';
+  String get bottom_home => 'Home አ';
 
   @override
-  String get bottom_book_mark => 'Book Mark';
+  String get bottom_book_mark => 'Book Mark አ';
 
   @override
-  String get bottom_offline => 'Offline';
+  String get bottom_offline => 'Offline አ';
 
   @override
-  String get bottom_profile => 'profile';
+  String get bottom_profile => 'profile አ';
 
   @override
   String get welcomeMessage => 'Welcome to the Exam Practice App!';
 
   @override
-  String get startExam => 'Start Exam';
+  String get startExam => 'Start Exam አ';
 
   @override
   String get viewResults => 'View Results';

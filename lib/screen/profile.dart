@@ -5,11 +5,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
-
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
-
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
@@ -30,11 +28,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 dense: true,
                 leading: Icon(FontAwesomeIcons.circleUser, color: Colors.blue),
-                title: body_samll_text_page(
+                title: body_text_page(
                   text_value:
                       lang(context).bottom_profile + "  " + index.toString(),
                 ),
-                subtitle: body_samll_text_page(
+                subtitle: body_text_page(
                   text_value: "This is a subtitle for item $index",
                 ),
               );

@@ -2,13 +2,10 @@
 import 'package:exam_practice_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 const String LAGUAGE_CODE = 'languageCode';
-
 //languages code
 const String ENGLISH = 'en';
 const String AMHARIC = 'am';
-
 
 class Language {
   static final all = [
