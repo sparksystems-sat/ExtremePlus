@@ -15,7 +15,7 @@ class _OfflinePageState extends State<OfflinePage> {
     return Scaffold(
       body: Center(
         child: medium_text_page(text_value: 
-          lang(context).bottom_offline,
+          t(context).bottom_offline,
       
         ),
       ),

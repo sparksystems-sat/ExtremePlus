@@ -14,7 +14,7 @@ class _BookMarkPageState extends State<BookMarkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: medium_text_page(text_value: lang(context).bottom_book_mark),
+        child: medium_text_page(text_value: t(context).bottom_book_mark),
       ),
     );
   }

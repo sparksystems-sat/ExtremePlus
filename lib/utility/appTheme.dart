@@ -14,7 +14,7 @@ var themData = ThemeData(
   primaryColor: AppColors.icon_color,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: AppColors.primaryColor,
+      // backgroundColor: AppColors.primaryColor,
       textStyle: TextStyle(
         color: AppColors.text_color,
         fontSize: 30,

@@ -46,4 +46,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get examSubmitted => 'Your exam has been submitted successfully!';
+
+  @override
+  String get create_account => 'Create Account';
+
+  @override
+  String get first_name => 'First Name';
+
+  @override
+  String get father_name => 'Father Name';
+
+  @override
+  String get grand_fname => 'Grand father Name';
+
+  @override
+  String get phone_number => 'Phone Number';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get grade => 'Grade';
 }

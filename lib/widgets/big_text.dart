@@ -13,7 +13,7 @@ class big_text extends State<big_text_page> {
     return Text(
       widget.text_value,
       style: TextStyle(
-        fontSize: 20.0,
+        fontSize: 30.0,
         fontWeight: FontWeight.bold,
         color: AppColors.icon_color,
       ),

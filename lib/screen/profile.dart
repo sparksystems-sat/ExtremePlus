@@ -1,4 +1,5 @@
 import 'package:exam_practice_app/l10n/language_constants.dart';
+import 'package:exam_practice_app/screen/account/create_user.dart';
 import 'package:exam_practice_app/widgets/body_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,6 +19,13 @@ class _ProfilePageState extends State<ProfilePage> {
             itemCount: 5,
             itemBuilder: (context, index) {
               return ListTile(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const CreateUserPage(),
+                    ),
+                  );
+                },
                 horizontalTitleGap: 12,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -30,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 leading: Icon(FontAwesomeIcons.circleUser, color: Colors.blue),
                 title: body_text_page(
                   text_value:
-                      lang(context).bottom_profile + "  " + index.toString(),
+                      t(context).bottom_profile + "  " + index.toString(),
                 ),
                 subtitle: body_text_page(
                   text_value: "This is a subtitle for item $index",

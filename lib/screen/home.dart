@@ -16,7 +16,7 @@ class _MyHomePageState extends State<HomePage> {
           SliverList(
             delegate: SliverChildListDelegate([
               Center(
-                child: medium_text_page(text_value: lang(context).bottom_home),
+                child: medium_text_page(text_value: t(context).bottom_home),
               ),
             ]),
           ),

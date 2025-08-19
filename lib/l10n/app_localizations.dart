@@ -172,6 +172,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your exam has been submitted successfully!'**
   String get examSubmitted;
+
+  /// No description provided for @create_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get create_account;
+
+  /// No description provided for @first_name.
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get first_name;
+
+  /// No description provided for @father_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Father Name'**
+  String get father_name;
+
+  /// No description provided for @grand_fname.
+  ///
+  /// In en, this message translates to:
+  /// **'Grand father Name'**
+  String get grand_fname;
+
+  /// No description provided for @phone_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phone_number;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @grade.
+  ///
+  /// In en, this message translates to:
+  /// **'Grade'**
+  String get grade;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

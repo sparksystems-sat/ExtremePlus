@@ -47,7 +47,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 color:
                     _selectedIndex == 0 ? Colors.black : Colors.grey.shade700,
               ),
-              label: lang(context).bottom_home,
+              label: t(context).bottom_home,
             ),
             BottomNavigationBarItem(
               icon: FaIcon(
@@ -55,7 +55,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 color:
                     _selectedIndex == 1 ? Colors.black : Colors.grey.shade700,
               ),
-              label: lang(context).bottom_book_mark,
+              label: t(context).bottom_book_mark,
             ),
             BottomNavigationBarItem(
               icon: Icon(
@@ -63,7 +63,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 color:
                     _selectedIndex == 2 ? Colors.black : Colors.grey.shade700,
               ),
-              label: lang(context).bottom_offline,
+              label: t(context).bottom_offline,
             ),
             BottomNavigationBarItem(
               icon: FaIcon(
@@ -71,7 +71,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 color:
                     _selectedIndex == 3 ? Colors.black : Colors.grey.shade700,
               ),
-              label: lang(context).bottom_profile,
+              label: t(context).bottom_profile,
             ),
           ],
           currentIndex: _selectedIndex,

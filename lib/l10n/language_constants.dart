@@ -47,7 +47,7 @@ Locale _locale(String languageCode) {
       return const Locale(ENGLISH, '');
   }
 }
-AppLocalizations lang(BuildContext context) {
+AppLocalizations t(BuildContext context) {
 
   return AppLocalizations.of(context)!;
 }

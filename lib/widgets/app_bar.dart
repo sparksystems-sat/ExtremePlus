@@ -61,7 +61,7 @@ class _App_BarState extends State<App_Bar> {
       // expandedHeight: 150.0,
       elevation: 1.0,
       floating: false,
-      title: big_text_page(text_value: lang(context).appName),
+      title: big_text_page(text_value: t(context).appName),
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(centerTitle: true),
       actions: [

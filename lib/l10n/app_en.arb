@@ -11,5 +11,12 @@
   "exit":"Exit",
   "examInstructions":"Please read the instructions carefully before starting the exam.",
   "submitExam":"Submit Exam",
-  "examSubmitted":"Your exam has been submitted successfully!"
+  "examSubmitted":"Your exam has been submitted successfully!",
+  "create_account": "Create Account",
+  "first_name":"First Name",
+  "father_name":"Father Name",
+  "grand_fname":"Grand father Name",
+  "phone_number":"Phone Number",
+  "password":"Password",
+  "grade":"Grade"
 }
