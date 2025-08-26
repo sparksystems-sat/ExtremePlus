@@ -67,4 +67,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get grade => 'Grade';
+
+  @override
+  String get course => 'Course';
+
+  @override
+  String get subject => 'Subject';
+
+  @override
+  String get exam => 'Exam';
+
+  @override
+  String get short_note => 'Short Note';
 }

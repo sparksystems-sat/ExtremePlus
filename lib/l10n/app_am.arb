@@ -18,5 +18,9 @@
   "grand_fname":"Grand father Name",
   "password":"Password",
   "phone_number":"Phone Number",
-  "grade":"Grade"
+  "grade":"Grade",
+  "subject":"Subject",
+  "course":"Course",
+  "exam":"Exam",
+  "short_note":"Short Note"
 }

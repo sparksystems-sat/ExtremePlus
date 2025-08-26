@@ -2,26 +2,18 @@ import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/utility/student_grade.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
-import 'package:exam_practice_app/widgets/body_text.dart';
-import 'package:exam_practice_app/widgets/medium_text.dart';
 import 'package:exam_practice_app/widgets/text_filed_form.dart';
 import 'package:flutter/material.dart';
-
 class CreateUserPage extends StatefulWidget {
   const CreateUserPage({super.key});
-
   @override
   State<CreateUserPage> createState() => _CreateUserPageState();
-}
-
+} 
 class _CreateUserPageState extends State<CreateUserPage> {
   String? _selectedGrade;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Create User'),
-      // ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -49,7 +41,7 @@ class _CreateUserPageState extends State<CreateUserPage> {
               keyboardType: TextInputType.text,
               validator: (value) {
                 if (value.isEmpty) {
-                  return 'Please enter a username';
+                  return 'Please enter a first name';
                 }
                 return null;
               },
@@ -129,7 +121,6 @@ class _CreateUserPageState extends State<CreateUserPage> {
               child: DropdownButtonFormField<String>(
                 isExpanded: true,
                 value: _selectedGrade,
-
                 decoration: InputDecoration(
                   fillColor: AppColors.main_background_color.withOpacity(0.2),
                   filled: true,
@@ -165,7 +156,6 @@ class _CreateUserPageState extends State<CreateUserPage> {
                 },
               ),
             ),
-
             SizedBox(height: 16),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
