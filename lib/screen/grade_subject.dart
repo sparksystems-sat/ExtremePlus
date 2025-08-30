@@ -1,10 +1,12 @@
-import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:exam_practice_app/widgets/body_text.dart';
+import 'package:exam_practice_app/widgets/grade_subject_container.dart';
 import 'package:exam_practice_app/widgets/medium_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class GradeSubjectPage extends StatefulWidget {
   final int grade;
@@ -16,10 +18,9 @@ class GradeSubjectPage extends StatefulWidget {
 class _GradeSubjectPageState extends State<GradeSubjectPage> {
   @override
   Widget build(BuildContext context) {
-
-    
     return Scaffold(
       body: CustomScrollView(
+        shrinkWrap: true,
         slivers: [
           SliverList(
             delegate: SliverChildListDelegate([
@@ -31,7 +32,9 @@ class _GradeSubjectPageState extends State<GradeSubjectPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    big_text_page(text_value: t(context).subject)
+                    big_text_page(
+                          text_value: t(context).subject + " ${widget.grade}",
+                        )
                         .animate(
                           // this delay only happens once at the very start
                           onPlay: (controller) => controller.repeat(), // loop
@@ -48,22 +51,26 @@ class _GradeSubjectPageState extends State<GradeSubjectPage> {
           ),
           SliverGrid.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              // crossAxisCount: 3,
+              // mainAxisSpacing: 18.0,
+              // crossAxisSpacing: 4.0,
+              // childAspectRatio: 1,
               crossAxisCount: 3,
-              mainAxisSpacing: 16.0,
-              crossAxisSpacing: 16.0,
+              mainAxisSpacing: 20.0,
+              crossAxisSpacing: 2.0,
               childAspectRatio: 1,
             ),
             itemBuilder: (context, index) {
               int grade = index + 9;
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 3),
+                padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: GestureDetector(
                   onTap: () {},
-                  child: Card(
-                    child: Center(
-                      child: body_text_page(
-                        text_value: "${t(context).subject} $grade",
-                      ),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 0),
+                    child: GradeSubjectContainer(
+                      containerTitle: "${t(context).subject} $grade",
+                      icon: FontAwesomeIcons.bookOpen,
                     ),
                   ),
                 ),

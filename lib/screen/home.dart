@@ -1,12 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/screen/grade_subject.dart';
-import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
-import 'package:exam_practice_app/widgets/body_text.dart';
+import 'package:exam_practice_app/widgets/grade_subject_container.dart';
 import 'package:exam_practice_app/widgets/medium_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,11 +32,11 @@ class _MyHomePageState extends State<HomePage> {
           SliverList(
             delegate: SliverChildListDelegate([
               SizedBox(height: 20),
-
               Column(
                 children: [
                   Center(
                     child: CarouselSlider.builder(
+                    
                       itemCount: 15,
                       carouselController: buttonCarouselController,
                       itemBuilder:
@@ -78,13 +78,15 @@ class _MyHomePageState extends State<HomePage> {
                   SizedBox(height: 10),
                   AnimatedSmoothIndicator(
                     activeIndex: activeIndex,
+                    
                     count: images.length,
-                    effect: ExpandingDotsEffect(
-                      dotHeight: 12,
-                      dotWidth: 12,
-                      activeDotColor: Colors.redAccent,
-                      dotColor: Colors.black12,
-                    ),
+                    // effect: ExpandingDotsEffect(
+                    //   dotHeight: 12,
+                    //   dotWidth: 12,
+                      
+                    //   activeDotColor: Colors.redAccent,
+                    //   dotColor: Colors.black12,
+                    // ),
                   ),
                 ],
               ),
@@ -111,21 +113,23 @@ class _MyHomePageState extends State<HomePage> {
             itemBuilder: (context, index) {
               if (index == 0) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    color: Colors.blue,
-                    child: Center(
-                      child: body_text_page(text_value: 'Exam $index'),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: GradeSubjectContainer(
+                      containerTitle: "${t(context).exam} ",
+                      icon: FontAwesomeIcons.circleQuestion,
                     ),
                   ),
                 );
               } else if (index == 1) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    color: Colors.green,
-                    child: Center(
-                      child: body_text_page(text_value: 'Short Note $index'),
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: GradeSubjectContainer(
+                      containerTitle: "${t(context).short_note} ",
+                      icon: FontAwesomeIcons.bookOpenReader,
                     ),
                   ),
                 );
@@ -161,14 +165,14 @@ class _MyHomePageState extends State<HomePage> {
           SliverGrid.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisSpacing: 8.0,
-              crossAxisSpacing: 8.0,
-              childAspectRatio: 1.5,
+              mainAxisSpacing: 20.0,
+              crossAxisSpacing: 4.0,
+              childAspectRatio: 2,
             ),
             itemBuilder: (context, index) {
               int grade = index + 9;
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -178,18 +182,16 @@ class _MyHomePageState extends State<HomePage> {
                       ),
                     );
                   },
-                  child: Card(
-                    child: Center(
-                      child: body_text_page(
-                        text_value: "${t(context).grade} $grade",
-                      ),
-                    ),
+                  child: GradeSubjectContainer(
+                    containerTitle: "${t(context).grade} $grade",
+                    icon: FontAwesomeIcons.graduationCap,
                   ),
                 ),
               );
             },
             itemCount: 4,
           ),
+          SliverList(delegate: SliverChildListDelegate([SizedBox(height: 30)])),
         ],
       ),
     );

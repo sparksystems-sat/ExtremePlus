@@ -1,4 +1,3 @@
-
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/main.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
@@ -64,6 +63,7 @@ class _App_BarState extends State<App_Bar> {
       title: big_text_page(text_value: t(context).appName),
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(centerTitle: true),
+
       actions: [
         // The language switch button.
         Padding(

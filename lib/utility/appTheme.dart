@@ -8,7 +8,7 @@ var themData = ThemeData(
     bodyMedium: TextStyle(color: AppColors.text_color),
     bodyLarge: TextStyle(color: AppColors.text_color),
   ),
-  scaffoldBackgroundColor: AppColors.main_background_color,
+   scaffoldBackgroundColor: AppColors.main_background_color,
   appBarTheme: AppBarTheme(color: AppColors.primaryColor),
   iconTheme: IconThemeData(color: AppColors.icon_color),
   primaryColor: AppColors.icon_color,
