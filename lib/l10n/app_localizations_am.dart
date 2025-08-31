@@ -79,4 +79,19 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get short_note => 'Short Note';
+
+  @override
+  String get mathematics => 'Mathematics';
+
+  @override
+  String get biology => 'Biology';
+
+  @override
+  String get physics => 'Physics';
+
+  @override
+  String get chemistry => 'Chemistry';
+
+  @override
+  String get exam_title => 'Exam Title';
 }

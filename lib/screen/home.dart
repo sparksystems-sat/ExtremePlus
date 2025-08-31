@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:exam_practice_app/screen/grade_selection.dart';
+// import 'package:exam_practice_app/screen/exam_subjects.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -111,18 +113,27 @@ class _MyHomePageState extends State<HomePage> {
               childAspectRatio: 1.5,
             ),
             itemBuilder: (context, index) {
-              if (index == 0) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: GradeSubjectContainer(
-                      containerTitle: "${t(context).exam} ",
-                      icon: FontAwesomeIcons.circleQuestion,
-                    ),
+              // Inside the SliverGrid.builder in HomePage's build method
+
+            if (index == 0) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: GestureDetector(
+                  onTap: () {
+                    // This navigates to the new StatefulWidget
+                    Navigator.push(
+                      context,
+                      // MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
+                      MaterialPageRoute(builder: (context) => GradeSelectionPage()),
+                    );
+                  },
+                  child: GradeSubjectContainer(
+                    containerTitle: "${t(context).exam} ",
+                    icon: FontAwesomeIcons.circleQuestion,
                   ),
-                );
-              } else if (index == 1) {
+                ),
+              );
+            }else if (index == 1) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: GestureDetector(
