@@ -43,7 +43,6 @@ class InputTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       focusNode: focusNode,
       autofillHints: autofillHints,
-
       maxLines: maxLines ?? 1,
       textCapitalization:
           textCapitalization != null

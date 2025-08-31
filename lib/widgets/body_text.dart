@@ -19,8 +19,6 @@ class body_samll_text extends State<body_text_page> {
         fontWeight: FontWeight.bold,
         color: AppColors.text_color,
       ),
-
-      overflow: TextOverflow.ellipsis,
     );
   }
 }

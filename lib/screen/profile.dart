@@ -1,5 +1,5 @@
 import 'package:exam_practice_app/l10n/language_constants.dart';
-import 'package:exam_practice_app/screen/account/create_user.dart';
+import 'package:exam_practice_app/screen/account/create_account.dart';
 import 'package:exam_practice_app/widgets/body_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

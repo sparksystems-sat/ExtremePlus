@@ -214,6 +214,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Grade'**
   String get grade;
+
+  /// No description provided for @course.
+  ///
+  /// In en, this message translates to:
+  /// **'Course'**
+  String get course;
+
+  /// No description provided for @subject.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get subject;
+
+  /// No description provided for @exam.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam'**
+  String get exam;
+
+  /// No description provided for @short_note.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Note'**
+  String get short_note;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

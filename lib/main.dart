@@ -2,12 +2,8 @@
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/utility/appTheme.dart';
 import 'package:exam_practice_app/widgets/bottom_navigation.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:exam_practice_app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
 
 void main() {
@@ -32,7 +28,9 @@ class MyApp extends StatefulWidget {
     state?.setLocale(newLocale);
   }
 }
-class MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp>  {
+
+  
   Locale? _locale;
   setLocale(Locale locale) {
     setState(() {
