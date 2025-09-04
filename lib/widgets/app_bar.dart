@@ -2,18 +2,14 @@ import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/main.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
-import 'package:exam_practice_app/widgets/small_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 class App_Bar extends StatefulWidget {
   const App_Bar({super.key});
   @override
   State<App_Bar> createState() => _App_BarState();
 }
-
 class _App_BarState extends State<App_Bar> {
   String selectedLang = "";
   bool isdropdown = false;
@@ -23,7 +19,6 @@ class _App_BarState extends State<App_Bar> {
     super.initState();
     _updateLocale();
   }
-
   Future<void> _updateLocale() async {
     String languageCode = await getLocale();
     if (AMHARIC == languageCode) {
@@ -36,7 +31,6 @@ class _App_BarState extends State<App_Bar> {
       _locale(languageCode);
     });
   }
-
   Locale _locale(String languageCode) {
     switch (languageCode) {
       case ENGLISH:
@@ -47,12 +41,10 @@ class _App_BarState extends State<App_Bar> {
         return const Locale(ENGLISH, '');
     }
   }
-
   Future<void> languageChage(BuildContext context, String langugeCode) async {
     Locale locale = await setLocale(langugeCode);
     MyApp.setLocale(context, locale);
   }
-
   @override
   Widget build(BuildContext context) {
     // final language_switch = context.read<LanguagSwitch>();
@@ -63,7 +55,6 @@ class _App_BarState extends State<App_Bar> {
       title: big_text_page(text_value: t(context).appName),
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(centerTitle: true),
-
       actions: [
         // The language switch button.
         Padding(
@@ -91,12 +82,7 @@ class _App_BarState extends State<App_Bar> {
         ),
 
         GestureDetector(
-          onTap: () {
-            // language_switch.switchLanguage();
-            // setState(() {
-            //   languageChage(context, language_switch.state.languageCode);
-            // });
-          },
+          onTap: () {},
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 8.0, 27.0, 8.0),
             child: PopupMenuButton<String>(
