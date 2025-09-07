@@ -12,7 +12,7 @@ class _QuizPageState extends State<QuizPage> {
   bool showAllExplanations = false;
 
   final ScrollController _scrollController = ScrollController();
-  bool _showSubmitButton = false;
+  bool _showSubmitButton = false; 
 
   final List<Map<String, dynamic>> questions = [
     {
