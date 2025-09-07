@@ -88,7 +88,7 @@ class _QuizPageState extends State<QuizPage> {
 
   void showExplanationsOnly() {
     setState(() {
-      showAllExplanations = true; // enables feedback logic
+      showAllExplanations = true; 
       for (int i = 0; i < questions.length; i++) {
         showExplanation[i] = true;
       }
@@ -132,7 +132,7 @@ class _QuizPageState extends State<QuizPage> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start, // ✅ aligns tops
               children: [
-                // Left side
+                
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +160,6 @@ class _QuizPageState extends State<QuizPage> {
 
                 const SizedBox(width: 12),
 
-                // Right side
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -303,7 +302,6 @@ class _QuizPageState extends State<QuizPage> {
         ],
       ),
 
-      // Floating Button for Submit
       floatingActionButton:
           (_showSubmitButton && selectedAnswers.isNotEmpty)
               ? FloatingActionButton.extended(
