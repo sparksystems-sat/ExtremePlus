@@ -4,7 +4,7 @@ import 'package:exam_practice_app/widgets/subject_card.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:exam_practice_app/screen/quize_page.dart';
+import 'package:exam_practice_app/screen/exam_page.dart';
 
 
 class ExamSubjectsPage extends StatefulWidget {
