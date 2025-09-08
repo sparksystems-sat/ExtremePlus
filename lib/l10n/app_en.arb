@@ -22,5 +22,10 @@
   "course":"Course", 
   "subject":"Subject",
   "exam":"Exam",
-  "short_note":"Short Note"
+  "short_note":"Short Note",
+  "mathematics": "Mathematics",
+  "biology": "Biology",
+  "physics": "Physics",
+  "chemistry": "Chemistry",
+  "exam_title": "Exam Title"
 }

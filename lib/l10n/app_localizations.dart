@@ -238,6 +238,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Short Note'**
   String get short_note;
+
+  /// No description provided for @mathematics.
+  ///
+  /// In en, this message translates to:
+  /// **'Mathematics'**
+  String get mathematics;
+
+  /// No description provided for @biology.
+  ///
+  /// In en, this message translates to:
+  /// **'Biology'**
+  String get biology;
+
+  /// No description provided for @physics.
+  ///
+  /// In en, this message translates to:
+  /// **'Physics'**
+  String get physics;
+
+  /// No description provided for @chemistry.
+  ///
+  /// In en, this message translates to:
+  /// **'Chemistry'**
+  String get chemistry;
+
+  /// No description provided for @exam_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Exam Title'**
+  String get exam_title;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
