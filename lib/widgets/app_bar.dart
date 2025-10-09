@@ -5,12 +5,14 @@ import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class App_Bar extends StatefulWidget {
   const App_Bar({super.key});
   @override
-  State<App_Bar> createState() => _App_BarState();
+  State<App_Bar> createState() => _AppBarState();
 }
-class _App_BarState extends State<App_Bar> {
+
+class _AppBarState extends State<App_Bar> {
   String selectedLang = "";
   bool isdropdown = false;
   bool isdropdown1 = false;
@@ -19,6 +21,7 @@ class _App_BarState extends State<App_Bar> {
     super.initState();
     _updateLocale();
   }
+
   Future<void> _updateLocale() async {
     String languageCode = await getLocale();
     if (AMHARIC == languageCode) {
@@ -31,6 +34,7 @@ class _App_BarState extends State<App_Bar> {
       _locale(languageCode);
     });
   }
+
   Locale _locale(String languageCode) {
     switch (languageCode) {
       case ENGLISH:
@@ -41,10 +45,12 @@ class _App_BarState extends State<App_Bar> {
         return const Locale(ENGLISH, '');
     }
   }
+
   Future<void> languageChage(BuildContext context, String langugeCode) async {
     Locale locale = await setLocale(langugeCode);
     MyApp.setLocale(context, locale);
   }
+
   @override
   Widget build(BuildContext context) {
     // final language_switch = context.read<LanguagSwitch>();

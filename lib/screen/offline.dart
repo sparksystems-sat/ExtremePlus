@@ -14,7 +14,7 @@ class _OfflinePageState extends State<OfflinePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: medium_text_page(text_value: 
+        child: medium_text_page(textValue: 
           t(context).bottom_offline,
       
         ),

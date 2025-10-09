@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({Key? key}) : super(key: key);
-
   @override
   State<QuizPage> createState() => _QuizPageState();
 }
-
 class _QuizPageState extends State<QuizPage> {
   int answeredCount = 0;
-
   final List<Map<String, dynamic>> questions = [
     {
       "question": "Choose the correct sentence:",
@@ -135,7 +132,6 @@ class _QuizPageState extends State<QuizPage> {
                 borderColor = Colors.green;
               }
             }
-
             return GestureDetector(
               onTap: () => selectAnswer(qIndex, optIndex),
               child: Container(

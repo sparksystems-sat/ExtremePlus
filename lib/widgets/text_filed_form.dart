@@ -34,7 +34,6 @@ class InputTextFormField extends StatelessWidget {
     this.maxLines,
     this.inputFormatters,
   });
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -62,7 +61,7 @@ class InputTextFormField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: AppColors.text_color.withOpacity(0.2)),
+          borderSide: BorderSide(color: AppColors.text_color.withOpacity(0.5)),
         ),
         suffixIcon: suffixIcon,
       ),

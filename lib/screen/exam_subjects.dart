@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:exam_practice_app/widgets/subject_card.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
-import 'package:exam_practice_app/widgets/big_text.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:exam_practice_app/screen/exam_page.dart';
 
+import 'package:exam_practice_app/screen/exam_page.dart';
 
 class ExamSubjectsPage extends StatefulWidget {
   const ExamSubjectsPage({Key? key}) : super(key: key);
@@ -47,17 +45,14 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        // elevation: 2, 
-        iconTheme: const IconThemeData(color: Colors.black), 
+        // elevation: 2,
+        iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
         title: const Text(
-            "Select Subject",
-            style: TextStyle(
-            color: Colors.black, 
-            fontWeight: FontWeight.bold,
-            ),
+          "Select Subject",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
-        ),
+      ),
       body: CustomScrollView(
         slivers: [
           SliverList(
@@ -97,8 +92,8 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPage> {
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => QuizPage()),
+                      context,
+                      MaterialPageRoute(builder: (context) => QuizPage()),
                     );
                   },
                   child: SubjectCard(
@@ -112,9 +107,7 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPage> {
             ),
           ),
           SliverList(
-            delegate: SliverChildListDelegate([
-              const SizedBox(height: 30),
-            ]),
+            delegate: SliverChildListDelegate([const SizedBox(height: 30)]),
           ),
         ],
       ),

@@ -5,7 +5,7 @@ import 'package:exam_practice_app/screen/home.dart';
 import 'package:exam_practice_app/screen/offline.dart';
 import 'package:exam_practice_app/screen/profile.dart';
 import 'package:exam_practice_app/widgets/app_bar.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,7 +18,7 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation>
     with TickerProviderStateMixin {
-  ParticleOptions particles =  ParticleOptions(
+  ParticleOptions particles = ParticleOptions(
     baseColor: Colors.red,
     spawnOpacity: 0.1,
     opacityChangeRate: 0.25,
@@ -94,7 +94,6 @@ class _BottomNavigationState extends State<BottomNavigation>
           type: BottomNavigationBarType.fixed,
         ),
       ),
-
       body: AnimatedBackground(
         vsync: this,
         behaviour: RandomParticleBehaviour(

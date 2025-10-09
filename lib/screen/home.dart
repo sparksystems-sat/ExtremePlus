@@ -100,7 +100,7 @@ class _MyHomePageState extends State<HomePage> {
             delegate: SliverChildListDelegate([
               SizedBox(height: 20),
               Center(
-                child: medium_text_page(text_value: t(context).bottom_home),
+                child: medium_text_page(textValue: t(context).bottom_home),
               ),
               SizedBox(height: 20),
             ]),
