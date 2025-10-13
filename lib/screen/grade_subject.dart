@@ -1,4 +1,5 @@
 import 'package:exam_practice_app/l10n/language_constants.dart';
+import 'package:exam_practice_app/screen/learning_page.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:exam_practice_app/widgets/grade_subject_container.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,14 @@ class _GradeSubjectPageState extends State<GradeSubjectPage> {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LearningPage(subject_id: grade),
+                      ),
+                    );
+                  },
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 0),
                     child: GradeSubjectContainer(
