@@ -3,7 +3,6 @@ import 'package:exam_practice_app/main.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class App_Bar extends StatefulWidget {
