@@ -18,6 +18,7 @@ dependencies:
   card_swiper: ^3.0.1
   animated_background:
   shared_preferences: ^2.5.3
+  syncfusion_flutter_pdfviewer: ^31.1.19
 dev_dependencies:
   flutter_test:
     sdk: flutter
