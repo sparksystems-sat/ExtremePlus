@@ -84,7 +84,7 @@ class _MyHomePageState extends State<HomePage> {
     return SizedBox(
   width: 140,
   height: 160,
-  child: SubjectCard(
+  child: SubjectCardExam(
     subjectName: subject["name"] as String,
     progress: subject["progress"] as int,
     icon: subject["icon"] as IconData,

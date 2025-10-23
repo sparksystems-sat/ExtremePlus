@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/screen/grade_subject.dart';
+import 'package:exam_practice_app/screen/short_notes/grade_selection_short_notes.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:exam_practice_app/widgets/grade_subject_container.dart';
 import 'package:exam_practice_app/widgets/medium_text.dart';
@@ -137,7 +138,14 @@ class _MyHomePageState extends State<HomePage> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                    // This navigates to the new StatefulWidget
+                    Navigator.push(
+                      context,
+                      // MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
+                      MaterialPageRoute(builder: (context) => GradeSelectionPageShortNotes()),
+                    );
+                  },
                     child: GradeSubjectContainer(
                       containerTitle: "${t(context).short_note} ",
                       icon: FontAwesomeIcons.bookOpenReader,
