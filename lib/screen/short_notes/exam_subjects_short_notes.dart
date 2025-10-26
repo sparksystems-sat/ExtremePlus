@@ -18,6 +18,30 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPageShortNotes> {
   @override
   Widget build(BuildContext context) {
     // Make sure these keys exist in your .arb files
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    double iconSize;
+    double fontSize;
+    double aspectRatio;
+
+    if (screenWidth < 400) {
+      iconSize = 20;
+      fontSize = 14;
+      aspectRatio = 0.9;
+    } else if (screenWidth < 600) {
+      iconSize = 40;
+      fontSize = 18;
+      aspectRatio = 1.0;
+    } else if (screenWidth < 800) {
+      iconSize = 60;
+      fontSize = 22;
+      aspectRatio = 1.4;
+    } else {
+      iconSize = 80;
+      fontSize = 26;
+      aspectRatio = 1.6;
+    }
+
     final List<Map<String, dynamic>> subjects = [
       {
         "name": t(context).mathematics,
@@ -47,13 +71,14 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPageShortNotes> {
 
     return Scaffold(
       appBar: AppBar(
-        // elevation: 2,
-        iconTheme: const IconThemeData(color: Colors.black),
-        centerTitle: true,
         title: const Text(
-          "Select Subject",
+          'Select Subject',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        elevation: 1,
       ),
       body: CustomScrollView(
         slivers: [
@@ -82,11 +107,11 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPageShortNotes> {
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             sliver: SliverGrid.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 16.0,
                 crossAxisSpacing: 16.0,
-                childAspectRatio: 0.95,
+                childAspectRatio:aspectRatio,
               ),
               itemCount: subjects.length,
               itemBuilder: (context, index) {
@@ -102,6 +127,8 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPageShortNotes> {
                     subjectName: subject["name"] as String,
                     icon: subject["icon"] as IconData,
                     iconColor: subject["color"] as Color,
+                    iconSize: iconSize,
+                    fontSize: fontSize,
                   ),
                 );
               },

@@ -33,17 +33,15 @@ class GradeSelectionPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        // elevation: 2, 
-        iconTheme: const IconThemeData(color: Colors.black), 
-        centerTitle: true,
         title: const Text(
-            "Select Grade",
-            style: TextStyle(
-            color: Colors.black, 
-            fontWeight: FontWeight.bold,
-            ),
+          'Select Grade',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
-        ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        elevation: 1,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: GridView.builder(

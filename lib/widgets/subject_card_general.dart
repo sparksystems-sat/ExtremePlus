@@ -4,12 +4,16 @@ class SubjectCardGeneral extends StatelessWidget {
   final String subjectName;
   final IconData icon;
   final Color iconColor;
+  final double iconSize;
+  final double fontSize;
 
   const SubjectCardGeneral({
     Key? key,
     required this.subjectName,
     required this.icon,
     required this.iconColor,
+    required this.iconSize,
+    required this.fontSize,
   }) : super(key: key);
 
   @override
@@ -34,15 +38,15 @@ class SubjectCardGeneral extends StatelessWidget {
                 child: Icon(
                   icon,
                   color: iconColor,
-                  size: 36,
+                  size: iconSize,
                 ),
               ),
               const SizedBox(height: 16),
               Text(
                 subjectName,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: TextStyle(
+                  fontSize: fontSize,
                   fontWeight: FontWeight.w600,
                 ),
               ),
