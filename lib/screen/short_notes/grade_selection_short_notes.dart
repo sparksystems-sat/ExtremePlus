@@ -8,6 +8,30 @@ class GradeSelectionPageShortNotes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    double iconSize;
+    double fontSize;
+    double aspectRatio;
+
+    if (screenWidth < 400) {
+      iconSize = 50;
+      fontSize = 14;
+      aspectRatio = 0.9;
+    } else if (screenWidth < 600) {
+      iconSize = 70;
+      fontSize = 18;
+      aspectRatio = 1.0;
+    } else if (screenWidth < 800) {
+      iconSize = 90;
+      fontSize = 22;
+      aspectRatio = 1.4;
+    } else {
+      iconSize = 110;
+      fontSize = 26;
+      aspectRatio = 1.8;
+    }
+
     final List<Map<String, dynamic>> grades = [
       {
         "label": "Grade 9",
@@ -34,26 +58,24 @@ class GradeSelectionPageShortNotes extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        // elevation: 2, 
-        iconTheme: const IconThemeData(color: Colors.black), 
-        centerTitle: true,
         title: const Text(
-            "Select Grade",
-            style: TextStyle(
-            color: Colors.black, 
-            fontWeight: FontWeight.bold,
-            ),
+          'Select Grade',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
-        ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        elevation: 1,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
           itemCount: grades.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 20.0,
             crossAxisSpacing: 20.0,
-            childAspectRatio: 1.0,
+            childAspectRatio: aspectRatio,
           ),
           itemBuilder: (context, index) {
             final grade = grades[index];
@@ -77,14 +99,15 @@ class GradeSelectionPageShortNotes extends StatelessWidget {
                   children: [
                     Icon(
                       grade['icon'],
-                      size: 60,
+                      size: iconSize,
                       color: grade['color'],
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(
+                      height: 12),
                     Text(
                       grade['label'],
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: TextStyle(
+                        fontSize: fontSize,
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
                       ),
