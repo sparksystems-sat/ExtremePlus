@@ -1,12 +1,37 @@
+import 'package:exam_practice_app/screen/short_notes/exam_subjects_short_notes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:exam_practice_app/screen/exam_subjects.dart';
 
-class GradeSelectionPage extends StatelessWidget {
-  const GradeSelectionPage({Key? key}) : super(key: key);
+class GradeSelectionPageShortNotes extends StatelessWidget {
+  const GradeSelectionPageShortNotes({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    double iconSize;
+    double fontSize;
+    double aspectRatio;
+
+    if (screenWidth < 400) {
+      iconSize = 50;
+      fontSize = 14;
+      aspectRatio = 0.9;
+    } else if (screenWidth < 600) {
+      iconSize = 70;
+      fontSize = 18;
+      aspectRatio = 1.0;
+    } else if (screenWidth < 800) {
+      iconSize = 90;
+      fontSize = 22;
+      aspectRatio = 1.4;
+    } else {
+      iconSize = 110;
+      fontSize = 26;
+      aspectRatio = 1.8;
+    }
+
     final List<Map<String, dynamic>> grades = [
       {
         "label": "Grade 9",
@@ -46,11 +71,11 @@ class GradeSelectionPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
           itemCount: grades.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             mainAxisSpacing: 20.0,
             crossAxisSpacing: 20.0,
-            childAspectRatio: 1.0,
+            childAspectRatio: aspectRatio,
           ),
           itemBuilder: (context, index) {
             final grade = grades[index];
@@ -60,7 +85,7 @@ class GradeSelectionPage extends StatelessWidget {
 
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
+                    MaterialPageRoute(builder: (context) => ExamSubjectsPageShortNotes()),
                 );
               },
               child: Card( 
@@ -74,14 +99,15 @@ class GradeSelectionPage extends StatelessWidget {
                   children: [
                     Icon(
                       grade['icon'],
-                      size: 60,
+                      size: iconSize,
                       color: grade['color'],
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(
+                      height: 12),
                     Text(
                       grade['label'],
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: TextStyle(
+                        fontSize: fontSize,
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
                       ),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SubjectCard extends StatelessWidget {
+class SubjectCardExam extends StatelessWidget {
   final String subjectName;
   final int progress; // percent value
   final IconData icon;
   final Color iconColor;
 
-  const SubjectCard({
+  const SubjectCardExam({
     Key? key,
     required this.subjectName,
     required this.progress,

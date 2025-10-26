@@ -1,3 +1,5 @@
+import 'package:exam_practice_app/screen/short_notes/short_note.dart';
+import 'package:exam_practice_app/widgets/subject_card_general.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:exam_practice_app/widgets/subject_card.dart';
@@ -5,17 +7,41 @@ import 'package:exam_practice_app/l10n/language_constants.dart';
 
 import 'package:exam_practice_app/screen/exam_page.dart';
 
-class ExamSubjectsPage extends StatefulWidget {
-  const ExamSubjectsPage({Key? key}) : super(key: key);
+class ExamSubjectsPageShortNotes extends StatefulWidget {
+  const ExamSubjectsPageShortNotes({Key? key}) : super(key: key);
 
   @override
-  State<ExamSubjectsPage> createState() => _ExamSubjectsPageState();
+  State<ExamSubjectsPageShortNotes> createState() => _ExamSubjectsPageState();
 }
 
-class _ExamSubjectsPageState extends State<ExamSubjectsPage> {
+class _ExamSubjectsPageState extends State<ExamSubjectsPageShortNotes> {
   @override
   Widget build(BuildContext context) {
     // Make sure these keys exist in your .arb files
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    double iconSize;
+    double fontSize;
+    double aspectRatio;
+
+    if (screenWidth < 400) {
+      iconSize = 20;
+      fontSize = 14;
+      aspectRatio = 0.9;
+    } else if (screenWidth < 600) {
+      iconSize = 40;
+      fontSize = 18;
+      aspectRatio = 1.0;
+    } else if (screenWidth < 800) {
+      iconSize = 60;
+      fontSize = 22;
+      aspectRatio = 1.4;
+    } else {
+      iconSize = 80;
+      fontSize = 26;
+      aspectRatio = 1.6;
+    }
+
     final List<Map<String, dynamic>> subjects = [
       {
         "name": t(context).mathematics,
@@ -81,11 +107,11 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPage> {
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             sliver: SliverGrid.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 16.0,
                 crossAxisSpacing: 16.0,
-                childAspectRatio: 0.95,
+                childAspectRatio:aspectRatio,
               ),
               itemCount: subjects.length,
               itemBuilder: (context, index) {
@@ -94,14 +120,15 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => QuizPage()),
+                      MaterialPageRoute(builder: (context) => ShortNotesPage()),
                     );
                   },
-                  child: SubjectCardExam(
+                  child: SubjectCardGeneral(
                     subjectName: subject["name"] as String,
-                    progress: subject["progress"] as int,
                     icon: subject["icon"] as IconData,
                     iconColor: subject["color"] as Color,
+                    iconSize: iconSize,
+                    fontSize: fontSize,
                   ),
                 );
               },
