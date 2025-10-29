@@ -1,6 +1,5 @@
 import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:flutter/material.dart';
-
 class MainAppbar extends StatefulWidget {
   String title;
   List<String>? tabs;
@@ -9,7 +8,6 @@ class MainAppbar extends StatefulWidget {
   @override
   State<MainAppbar> createState() => _MainAppbarState();
 }
-
 class _MainAppbarState extends State<MainAppbar> {
   @override
   Widget build(BuildContext context) {

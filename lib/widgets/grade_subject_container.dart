@@ -2,7 +2,6 @@ import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/body_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 class GradeSubjectContainer extends StatefulWidget {
   final String containerTitle;
   final IconData icon;
@@ -14,7 +13,6 @@ class GradeSubjectContainer extends StatefulWidget {
   @override
   State<GradeSubjectContainer> createState() => _GradeSubjectContainerState();
 }
-
 class _GradeSubjectContainerState extends State<GradeSubjectContainer> {
   @override
   Widget build(BuildContext context) {
@@ -27,14 +25,12 @@ class _GradeSubjectContainerState extends State<GradeSubjectContainer> {
         borderRadius: BorderRadius.circular(12.0),
         border: Border.all(width: 1, color: Colors.white),
         boxShadow: [
-          
           BoxShadow(
             // blurRadius: 4,
-            color: Colors.white ,//color of shadow
+            color: Colors.white, //color of shadow
             // color: Color(), //edited
             spreadRadius: 1,
             blurRadius: 1,
-
             // changes position of shadow
           ),
         ],
