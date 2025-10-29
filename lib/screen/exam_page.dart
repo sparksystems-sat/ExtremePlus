@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utility/appColors.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class _QuizPageState extends State<QuizPage> {
   bool showAllExplanations = false;
 
   final ScrollController _scrollController = ScrollController();
-  bool _showSubmitButton = false; 
+  bool _showSubmitButton = false;
 
   final List<Map<String, dynamic>> questions = [
     {
@@ -62,12 +63,30 @@ class _QuizPageState extends State<QuizPage> {
   final Map<int, bool> showExplanation = {};
 
   void selectAnswer(int qIndex, int optionIndex) {
-    if (selectedAnswers.containsKey(qIndex)) return;
+    // if (selectedAnswers.containsKey(qIndex)) return;
 
-    setState(() {
-      selectedAnswers[qIndex] = optionIndex;
-      answeredCount++;
-    });
+    // setState(() {
+    //   selectedAnswers[qIndex] = optionIndex;
+    //   answeredCount++;
+    // });
+    if (!showAllExplanations) {
+      final wasAlreadyAnswered = selectedAnswers.containsKey(qIndex);
+
+      setState(() {
+        selectedAnswers[qIndex] = optionIndex;
+        if (!wasAlreadyAnswered) {
+          answeredCount++;
+        }
+      });
+    } else {
+      if (selectedAnswers[qIndex] == null) {
+        setState(() {
+          selectedAnswers[qIndex] = optionIndex;
+          showExplanation[qIndex] = true;
+          answeredCount++;
+        });
+      }
+    }
   }
   void toggleExplanation(int qIndex) {
     setState(() {
@@ -85,7 +104,7 @@ class _QuizPageState extends State<QuizPage> {
 
   void showExplanationsOnly() {
     setState(() {
-      showAllExplanations = true; 
+      showAllExplanations = true;
       for (int i = 0; i < questions.length; i++) {
         showExplanation[i] = true;
       }
@@ -120,7 +139,16 @@ class _QuizPageState extends State<QuizPage> {
     double progress = answeredCount / questions.length;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Quiz"), centerTitle: true),
+      appBar: AppBar(
+        title: const Text(
+          'Question Bank',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        elevation: 1,
+      ),
       body: Column(
         children: [
           // Progress + Toggle Section
@@ -129,7 +157,6 @@ class _QuizPageState extends State<QuizPage> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start, // ✅ aligns tops
               children: [
-                
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,14 +249,14 @@ class _QuizPageState extends State<QuizPage> {
                               if (optIndex == selectedIndex) {
                                 borderColor =
                                     (optIndex == correctIndex)
-                                        ? Colors.green
-                                        : Colors.red;
+                                        ? AppColors.correct_answer
+                                        : AppColors.wrong_answer;
                               } else if (optIndex == correctIndex) {
                                 borderColor = Colors.green;
                               }
                             } else {
                               if (optIndex == selectedIndex) {
-                                borderColor = Colors.grey.shade800;
+                                borderColor = AppColors.exam_choice;
                               }
                             }
                           }

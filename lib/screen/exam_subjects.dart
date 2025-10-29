@@ -45,13 +45,14 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        // elevation: 2,
-        iconTheme: const IconThemeData(color: Colors.black),
-        centerTitle: true,
         title: const Text(
-          "Select Subject",
+          'Select Subject',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        elevation: 1,
       ),
       body: CustomScrollView(
         slivers: [

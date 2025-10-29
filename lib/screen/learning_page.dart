@@ -59,6 +59,7 @@ class _LearningPageState extends State<LearningPage> {
             ),
             SliverFillRemaining(
               child: TabBarView(
+                physics: BouncingScrollPhysics(),
                 // Map the data list to a list of content widgets
                 children:
                     chapterName.map((subject) {

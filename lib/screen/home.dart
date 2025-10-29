@@ -22,6 +22,22 @@ class _MyHomePageState extends State<HomePage> {
   CarouselSliderController buttonCarouselController =
       CarouselSliderController();
   int activeIndex = 0;
+  final List<Map<String, dynamic>> grades = [
+    {"label": "Grade 9", "icon": Icons.stairs, "color": Colors.green},
+    {"label": "Grade 10", "icon": Icons.lightbulb, "color": Colors.yellow[700]},
+    {
+      "label": "Grade 11",
+      "icon": Icons.local_fire_department,
+      "color": Colors.red,
+    },
+    {
+      "label": "Grade 12",
+      "icon": FontAwesomeIcons.bullseye,
+      // "icon": FontAwesomeIcons.key,
+      "color": Colors.blue,
+    },
+  ];
+
   final List<String> images = [
     'https://via.placeholder.com/600/FF5733/FFFFFF?text=Slide+1',
     'https://via.placeholder.com/600/33FF57/FFFFFF?text=Slide+2',
@@ -39,7 +55,6 @@ class _MyHomePageState extends State<HomePage> {
                 children: [
                   Center(
                     child: CarouselSlider.builder(
-                    
                       itemCount: 15,
                       carouselController: buttonCarouselController,
                       itemBuilder:
@@ -81,15 +96,9 @@ class _MyHomePageState extends State<HomePage> {
                   SizedBox(height: 10),
                   AnimatedSmoothIndicator(
                     activeIndex: activeIndex,
-                    
+
                     count: images.length,
-                    // effect: ExpandingDotsEffect(
-                    //   dotHeight: 12,
-                    //   dotWidth: 12,
-                      
-                    //   activeDotColor: Colors.redAccent,
-                    //   dotColor: Colors.black12,
-                    // ),
+                  
                   ),
                 ],
               ),
@@ -106,6 +115,7 @@ class _MyHomePageState extends State<HomePage> {
               SizedBox(height: 20),
             ]),
           ),
+
           SliverGrid.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -116,36 +126,40 @@ class _MyHomePageState extends State<HomePage> {
             itemBuilder: (context, index) {
               // Inside the SliverGrid.builder in HomePage's build method
 
-            if (index == 0) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: GestureDetector(
-                  onTap: () {
-                    // This navigates to the new StatefulWidget
-                    Navigator.push(
-                      context,
-                      // MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
-                      MaterialPageRoute(builder: (context) => GradeSelectionPage()),
-                    );
-                  },
-                  child: GradeSubjectContainer(
-                    containerTitle: "${t(context).exam} ",
-                    icon: FontAwesomeIcons.circleQuestion,
-                  ),
-                ),
-              );
-            }else if (index == 1) {
+              if (index == 0) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: GestureDetector(
                     onTap: () {
-                    // This navigates to the new StatefulWidget
-                    Navigator.push(
-                      context,
-                      // MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
-                      MaterialPageRoute(builder: (context) => GradeSelectionPageShortNotes()),
-                    );
-                  },
+                      // This navigates to the new StatefulWidget
+                      Navigator.push(
+                        context,
+                        // MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
+                        MaterialPageRoute(
+                          builder: (context) => GradeSelectionPage(),
+                        ),
+                      );
+                    },
+                    child: GradeSubjectContainer(
+                      containerTitle: "${t(context).exam} ",
+                      icon: FontAwesomeIcons.circleQuestion,
+                    ),
+                  ),
+                );
+              } else if (index == 1) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: GestureDetector(
+                    onTap: () {
+                      // This navigates to the new StatefulWidget
+                      Navigator.push(
+                        context,
+                        // MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
+                        MaterialPageRoute(
+                          builder: (context) => GradeSelectionPageShortNotes(),
+                        ),
+                      );
+                    },
                     child: GradeSubjectContainer(
                       containerTitle: "${t(context).short_note} ",
                       icon: FontAwesomeIcons.bookOpenReader,
@@ -156,6 +170,7 @@ class _MyHomePageState extends State<HomePage> {
             },
             itemCount: 2,
           ),
+
           SliverList(
             delegate: SliverChildListDelegate([
               Divider(),
@@ -185,30 +200,47 @@ class _MyHomePageState extends State<HomePage> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 20.0,
-              crossAxisSpacing: 4.0,
-              childAspectRatio: 2,
+              crossAxisSpacing: 20.0,
+              childAspectRatio: 1.0,
             ),
             itemBuilder: (context, index) {
-              int grade = index + 9;
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => GradeSubjectPage(grade: grade),
+              final grade = grades[index];
+              return GestureDetector(
+                onTap: () {
+                 
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GradeSubjectPage(grade: index + 1),
+                    ),
+                  );
+                },
+                child: Card(
+                  color: Colors.white,
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(grade['icon'], size: 60, color: grade['color']),
+                      const SizedBox(height: 12),
+                      Text(
+                        grade['label'],
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    );
-                  },
-                  child: GradeSubjectContainer(
-                    containerTitle: "${t(context).grade} $grade",
-                    icon: FontAwesomeIcons.graduationCap,
+                    ],
                   ),
                 ),
               );
             },
-            itemCount: 4,
+            itemCount: grades.length,
           ),
           SliverList(delegate: SliverChildListDelegate([SizedBox(height: 30)])),
         ],
