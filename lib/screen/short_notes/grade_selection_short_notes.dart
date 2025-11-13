@@ -33,11 +33,7 @@ class GradeSelectionPageShortNotes extends StatelessWidget {
     }
 
     final List<Map<String, dynamic>> grades = [
-      {
-        "label": "Grade 9",
-        "icon": Icons.stairs,
-        "color": Colors.green,
-      },
+      {"label": "Grade 9", "icon": Icons.stairs, "color": Colors.green},
       {
         "label": "Grade 10",
         "icon": Icons.lightbulb,
@@ -51,7 +47,7 @@ class GradeSelectionPageShortNotes extends StatelessWidget {
       {
         "label": "Grade 12",
         "icon": FontAwesomeIcons.bullseye,
-        // "icon": FontAwesomeIcons.key, 
+        // "icon": FontAwesomeIcons.key,
         "color": Colors.blue,
       },
     ];
@@ -81,29 +77,24 @@ class GradeSelectionPageShortNotes extends StatelessWidget {
             final grade = grades[index];
             return GestureDetector(
               onTap: () {
-                print("Selected ${grade['label']}");
-
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ExamSubjectsPageShortNotes()),
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ExamSubjectsPageShortNotes(),
+                  ),
                 );
               },
-              child: Card( 
-                color: Colors.white, 
-                elevation: 4, 
+              child: Card(
+                color: Colors.white,
+                elevation: 4,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15), 
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      grade['icon'],
-                      size: iconSize,
-                      color: grade['color'],
-                    ),
-                    const SizedBox(
-                      height: 12),
+                    Icon(grade['icon'], size: iconSize, color: grade['color']),
+                    const SizedBox(height: 12),
                     Text(
                       grade['label'],
                       style: TextStyle(
