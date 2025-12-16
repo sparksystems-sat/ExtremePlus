@@ -59,7 +59,6 @@ class _QuizPageState extends State<QuizPage> {
       "explanation": "The opposite of 'difficult' is 'easy'.",
     },
   ];
-
   final Map<int, int> selectedAnswers = {};
   final Map<int, bool> showExplanation = {};
 
@@ -89,13 +88,11 @@ class _QuizPageState extends State<QuizPage> {
       }
     }
   }
-
   void toggleExplanation(int qIndex) {
     setState(() {
       showExplanation[qIndex] = !(showExplanation[qIndex] ?? false);
     });
   }
-
   void toggleAllExplanations(bool value) {
     setState(() {
       showAllExplanations = value;

@@ -12,14 +12,11 @@ class SubjectCardExam extends StatelessWidget {
     required this.progress,
     required this.icon,
     required this.iconColor,
-  }) : super(key: key);
-
+  });
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -37,18 +34,12 @@ class SubjectCardExam extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               subjectName,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(
               "$progress% mastered",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-              ),
+              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
             const SizedBox(height: 12),
             ClipRRect(
@@ -66,5 +57,3 @@ class SubjectCardExam extends StatelessWidget {
     );
   }
 }
-
-

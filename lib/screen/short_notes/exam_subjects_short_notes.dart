@@ -111,7 +111,7 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPageShortNotes> {
                 crossAxisCount: 2,
                 mainAxisSpacing: 16.0,
                 crossAxisSpacing: 16.0,
-                childAspectRatio:aspectRatio,
+                childAspectRatio: aspectRatio,
               ),
               itemCount: subjects.length,
               itemBuilder: (context, index) {
