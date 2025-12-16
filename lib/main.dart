@@ -1,11 +1,8 @@
-
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/utility/appTheme.dart';
 import 'package:exam_practice_app/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
-
 import 'l10n/app_localizations.dart';
-
 void main() {
   runApp(
     // MultiProvider(
@@ -18,7 +15,6 @@ void main() {
     const MyApp(),
   );
 }
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
   @override
@@ -28,9 +24,7 @@ class MyApp extends StatefulWidget {
     state?.setLocale(newLocale);
   }
 }
-class MyAppState extends State<MyApp>  {
-
-  
+class MyAppState extends State<MyApp> {
   Locale? _locale;
   setLocale(Locale locale) {
     setState(() {

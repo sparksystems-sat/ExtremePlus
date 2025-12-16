@@ -1,19 +1,14 @@
 import 'package:exam_practice_app/screen/short_notes/exam_subjects_short_notes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:exam_practice_app/screen/exam_subjects.dart';
-
 class GradeSelectionPageShortNotes extends StatelessWidget {
-  const GradeSelectionPageShortNotes({Key? key}) : super(key: key);
-
+  const GradeSelectionPageShortNotes({super.key});
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
     double iconSize;
     double fontSize;
     double aspectRatio;
-
     if (screenWidth < 400) {
       iconSize = 50;
       fontSize = 14;
@@ -31,7 +26,6 @@ class GradeSelectionPageShortNotes extends StatelessWidget {
       fontSize = 26;
       aspectRatio = 1.8;
     }
-
     final List<Map<String, dynamic>> grades = [
       {"label": "Grade 9", "icon": Icons.stairs, "color": Colors.green},
       {
