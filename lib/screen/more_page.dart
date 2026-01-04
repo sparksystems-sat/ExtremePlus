@@ -1,6 +1,6 @@
-import 'package:exam_practice_app/screen/quiz/subject_battle_page.dart';
+import 'package:exam_practice_app/app/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -11,46 +11,37 @@ class MorePage extends StatefulWidget {
 class _MorePageState extends State<MorePage> {
   final List<Map<String, dynamic>> menuItems = [
     {
-      "title": "Note",
-      "icon": FontAwesomeIcons.book,
-      "color": Color(0xFF2196F3),
-      "route": null,
+      "title": "My Notes",
+      "svg": "assets/svgs/book.svg",
+      "route": AppRoutes.notes,
     },
+    {"title": "Game", "svg": 'assets/svgs/game.svg', "route": AppRoutes.game},
     {
-      "title": "Game",
-      "icon": FontAwesomeIcons.gamepad,
-      "color": Color(0xFF9C27B0),
-      "route": "game",
-    },
-    {
-      "title": "Time",
-      "icon": FontAwesomeIcons.clock,
-      "color": Color(0xFFFF9800),
-      "route": null,
+      "title": "Timer",
+      "svg": "assets/svgs/timer.svg",
+      "route": AppRoutes.timer,
     },
     {
       "title": "Short Notes",
-      "icon": FontAwesomeIcons.solidBookmark,
-      "color": Color(0xFF4CAF50),
-      "route": null,
+      "svg": "assets/svgs/notes.svg",
+      "route": AppRoutes.shortNotes,
     },
     {
       "title": "Random",
-      "icon": FontAwesomeIcons.dice,
-      "color": Color(0xFFF44336),
-      "route": null,
+      "svg": "assets/svgs/random.svg",
+      "route": AppRoutes.random,
     },
     {
       "title": "History",
-      "icon": FontAwesomeIcons.clockRotateLeft,
-      "color": Color(0xFF2196F3),
-      "route": null,
+      "svg": "assets/svgs/history.svg",
+      "route": AppRoutes.history,
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverPadding(
@@ -65,44 +56,37 @@ class _MorePageState extends State<MorePage> {
               itemCount: menuItems.length,
               itemBuilder: (context, index) {
                 final item = menuItems[index];
+                final String title = item["title"] as String;
+                final String svg = item["svg"] as String;
                 return GestureDetector(
                   onTap: () {
-                    if (item["route"] == "game") {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SubjectBattlePage(),
-                        ),
-                      );
-                    }
+                    final route = item["route"] as String?;
+                    if (route == null) return;
+                    Navigator.pushNamed(context, route);
                   },
-                  child: Card(
-                    color: Colors.white,
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const <BoxShadow>[
+                        BoxShadow(
+                          color: Color(0x11000000),
+                          blurRadius: 14,
+                          offset: Offset(0, 6),
+                        ),
+                      ],
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: FaIcon(
-                            item["icon"],
-                            size: 40,
-                            color: item["color"],
-                          ),
-                        ),
+                      children: <Widget>[
+                        SvgPicture.asset(svg, height: 34, width: 34),
                         const SizedBox(height: 12),
                         Text(
-                          item["title"],
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: item["color"],
-                            fontWeight: FontWeight.w600,
+                          title,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],

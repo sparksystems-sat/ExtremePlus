@@ -44,6 +44,17 @@ class _BottomNavigationState extends State<BottomNavigation>
     });
   }
 
+  BottomNavigationBarItem _item({
+    required int index,
+    required Widget icon,
+    required String label,
+  }) {
+    return BottomNavigationBarItem(
+      icon: _NavTab(icon: icon, label: label, active: _selectedIndex == index),
+      label: label,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,52 +66,34 @@ class _BottomNavigationState extends State<BottomNavigation>
         ),
         child: BottomNavigationBar(
           items: [
-            BottomNavigationBarItem(
-              icon: FaIcon(
-                FontAwesomeIcons.house,
-                color:
-                    _selectedIndex == 0
-                        ? AppColors.button3Color
-                        : Colors.grey.shade700,
-              ),
+            _item(
+              index: 0,
+              icon: const FaIcon(FontAwesomeIcons.house),
               label: t(context).bottom_home,
             ),
-            BottomNavigationBarItem(
-              icon: FaIcon(
-                FontAwesomeIcons.solidBookmark,
-                color:
-                    _selectedIndex == 1
-                        ? AppColors.button3Color
-                        : Colors.grey.shade700,
-              ),
+            _item(
+              index: 1,
+              icon: const FaIcon(FontAwesomeIcons.solidBookmark),
               label: t(context).bottom_book_mark,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.wifi_off,
-                color:
-                    _selectedIndex == 2
-                        ? AppColors.button3Color
-                        : Colors.grey.shade700,
-              ),
+            _item(
+              index: 2,
+              icon: const Icon(Icons.wifi_off),
               label: t(context).bottom_offline,
             ),
-            BottomNavigationBarItem(
-              icon: FaIcon(
-                FontAwesomeIcons.ellipsisVertical,
-                color:
-                    _selectedIndex == 3
-                        ? AppColors.button3Color
-                        : Colors.grey.shade700,
-              ),
+            _item(
+              index: 3,
+              icon: const FaIcon(FontAwesomeIcons.ellipsisVertical),
               label: 'More',
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: AppColors.button3Color,
-          unselectedItemColor: Colors.grey.shade700,
           onTap: _onItemTapped,
           type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          elevation: 0,
         ),
       ),
       body: AnimatedBackground(
@@ -123,6 +116,55 @@ class _BottomNavigationState extends State<BottomNavigation>
           ),
         ),
       ),
+    );
+  }
+}
+
+class _NavTab extends StatelessWidget {
+  const _NavTab({
+    required this.icon,
+    required this.label,
+    required this.active,
+  });
+
+  final Widget icon;
+  final String label;
+  final bool active;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color fg =
+        active
+            ? AppColors.navSelectedForeground
+            : AppColors.navSelectedForeground;
+
+    final Widget content = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconTheme(data: IconThemeData(color: fg, size: 22), child: icon),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            color: fg,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    );
+
+    if (!active) return content;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppColors.navSelectedBackground,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: content,
     );
   }
 }
