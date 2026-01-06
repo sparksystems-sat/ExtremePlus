@@ -44,57 +44,32 @@ class _BottomNavigationState extends State<BottomNavigation>
     });
   }
 
-  BottomNavigationBarItem _item({
-    required int index,
-    required Widget icon,
-    required String label,
-  }) {
-    return BottomNavigationBarItem(
-      icon: _NavTab(icon: icon, label: label, active: _selectedIndex == index),
-      label: label,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final items = <_NavItems>[
+      _NavItems(
+        icon: const FaIcon(FontAwesomeIcons.house),
+        label: t(context).bottom_home,
+      ),
+      _NavItems(
+        icon: const FaIcon(FontAwesomeIcons.solidBookmark),
+        label: t(context).bottom_book_mark,
+      ),
+      _NavItems(
+        icon: const Icon(Icons.wifi_off),
+        label: t(context).bottom_offline,
+      ),
+      const _NavItems(
+        icon: FaIcon(FontAwesomeIcons.ellipsisVertical),
+        label: 'More',
+      ),
+    ];
+
     return Scaffold(
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.grey.shade300, width: 1.0),
-          ),
-        ),
-        child: BottomNavigationBar(
-          items: [
-            _item(
-              index: 0,
-              icon: const FaIcon(FontAwesomeIcons.house),
-              label: t(context).bottom_home,
-            ),
-            _item(
-              index: 1,
-              icon: const FaIcon(FontAwesomeIcons.solidBookmark),
-              label: t(context).bottom_book_mark,
-            ),
-            _item(
-              index: 2,
-              icon: const Icon(Icons.wifi_off),
-              label: t(context).bottom_offline,
-            ),
-            _item(
-              index: 3,
-              icon: const FaIcon(FontAwesomeIcons.ellipsisVertical),
-              label: 'More',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          elevation: 0,
-        ),
+      bottomNavigationBar: _BottomNavBar(
+        items: items,
+        selectedIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
       body: AnimatedBackground(
         vsync: this,
@@ -120,51 +95,144 @@ class _BottomNavigationState extends State<BottomNavigation>
   }
 }
 
-class _NavTab extends StatelessWidget {
-  const _NavTab({
-    required this.icon,
-    required this.label,
-    required this.active,
-  });
-
+class _NavItems {
   final Widget icon;
   final String label;
-  final bool active;
+
+  const _NavItems({required this.icon, required this.label});
+}
+
+class _BottomNavBar extends StatelessWidget {
+  const _BottomNavBar({
+    required this.items,
+    required this.selectedIndex,
+    required this.onTap,
+  });
+
+  static const double _barHeight = 79;
+  static const double _selectedHeight = 92;
+
+  final List<_NavItems> items;
+  final int selectedIndex;
+  final ValueChanged<int> onTap;
 
   @override
   Widget build(BuildContext context) {
-    final Color fg =
-        active
-            ? AppColors.navSelectedForeground
-            : AppColors.navSelectedForeground;
+    final bg = Colors.white;
+    final selectedBg = AppColors.navSelectedBackground;
+    final fg = AppColors.navSelectedForeground;
 
-    final Widget content = Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        IconTheme(data: IconThemeData(color: fg, size: 22), child: icon),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: fg,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
+    return SafeArea(
+      top: false,
+      child: Container(
+        height: _barHeight,
+        decoration: BoxDecoration(
+          color: bg,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.16),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final itemCount = items.length;
+              final itemWidth = constraints.maxWidth / itemCount;
+              final highlightLeft = itemWidth * selectedIndex;
+
+              return Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    left: highlightLeft,
+                    bottom: 0,
+                    width: itemWidth,
+                    height: _selectedHeight,
+                    child: IgnorePointer(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: selectedBg,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(14),
+                            topRight: Radius.circular(14),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.12),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: List.generate(itemCount, (i) {
+                      final d = items[i];
+                      final active = i == selectedIndex;
+
+                      return Expanded(
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(14),
+                            onTap: () => onTap(i),
+                            child: SizedBox(
+                              height: _barHeight,
+                              child: Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconTheme(
+                                      data: IconThemeData(color: fg, size: 25),
+                                      child: d.icon,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 6,
+                                      ),
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          d.label,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          style: TextStyle(
+                                            color: fg,
+                                            fontSize: 14,
+                                            fontWeight:
+                                                active
+                                                    ? FontWeight.w700
+                                                    : FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ],
+              );
+            },
           ),
         ),
-      ],
-    );
-
-    if (!active) return content;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-      decoration: BoxDecoration(
-        color: AppColors.navSelectedBackground,
-        borderRadius: BorderRadius.circular(16),
       ),
-      child: content,
     );
   }
 }

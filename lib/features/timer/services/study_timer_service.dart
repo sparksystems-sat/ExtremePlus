@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:exam_practice_app/features/timer/timer_overlay.dart';
 import 'package:exam_practice_app/services/local_notifications.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -174,7 +173,8 @@ class StudyTimerService extends ChangeNotifier {
 
     await _persist();
 
-    TimerOverlay.showTimerFinishedNotice();
+    await LocalNotifications.cancelTimerFinished();
+    await LocalNotifications.showTimerFinished();
 
     notifyListeners();
   }

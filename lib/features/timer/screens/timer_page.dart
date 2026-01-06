@@ -3,6 +3,8 @@ import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'countdown_progress_bar.dart';
+
 class TimerPage extends StatefulWidget {
   const TimerPage({super.key});
 
@@ -17,14 +19,15 @@ class _TimerPageState extends State<TimerPage> {
   late final TextEditingController _minutesController;
   late final TextEditingController _secondsController;
 
-  double _minutesSlider = 30;
+  Duration _draftDuration = Duration.zero;
 
   @override
   void initState() {
     super.initState();
 
-    final last = _service.lastDuration;
-    _syncInputs(last);
+    _hoursController = TextEditingController();
+    _minutesController = TextEditingController();
+    _secondsController = TextEditingController();
   }
 
   @override
@@ -35,23 +38,7 @@ class _TimerPageState extends State<TimerPage> {
     super.dispose();
   }
 
-  void _syncInputs(Duration d) {
-    final h = d.inHours;
-    final m = d.inMinutes.remainder(60);
-    final s = d.inSeconds.remainder(60);
-
-    _hoursController = TextEditingController(
-      text: h.toString().padLeft(2, '0'),
-    );
-    _minutesController = TextEditingController(
-      text: m.toString().padLeft(2, '0'),
-    );
-    _secondsController = TextEditingController(
-      text: s.toString().padLeft(2, '0'),
-    );
-
-    _minutesSlider = d.inMinutes.clamp(0, 180).toDouble();
-  }
+  bool _isEmpty(TextEditingController c) => c.text.trim().isEmpty;
 
   static int _clampInt(int v, int min, int max) {
     if (v < min) return min;
@@ -67,19 +54,37 @@ class _TimerPageState extends State<TimerPage> {
     c.text = v.toString().padLeft(pad, '0');
   }
 
-  void _sanitizeInputs({bool updateSlider = true}) {
+  void _setControllerEmpty(
+    TextEditingController c,
+    int v, {
+    required bool keepEmpty,
+    int pad = 2,
+  }) {
+    if (keepEmpty && v == 0) {
+      c.text = '';
+    } else {
+      _setController(c, v, pad: pad);
+    }
+  }
+
+  void _sanitizeInputs() {
+    final hoursEmpty = _isEmpty(_hoursController);
+    final minutesEmpty = _isEmpty(_minutesController);
+    final secondsEmpty = _isEmpty(_secondsController);
+
     final h = _clampInt(_parseController(_hoursController), 0, 99);
     final m = _clampInt(_parseController(_minutesController), 0, 59);
     final s = _clampInt(_parseController(_secondsController), 0, 59);
 
-    _setController(_hoursController, h);
-    _setController(_minutesController, m);
-    _setController(_secondsController, s);
+    _setControllerEmpty(_hoursController, h, keepEmpty: hoursEmpty);
+    _setControllerEmpty(_minutesController, m, keepEmpty: minutesEmpty);
+    _setControllerEmpty(_secondsController, s, keepEmpty: secondsEmpty);
 
-    if (updateSlider) {
-      final totalMinutes = Duration(hours: h, minutes: m).inMinutes;
-      _minutesSlider = totalMinutes.clamp(0, 180).toDouble();
-    }
+    _draftDuration = Duration(hours: h, minutes: m, seconds: s);
+  }
+
+  void _updateDraftDuration() {
+    _draftDuration = _parseDuration();
   }
 
   Duration _parseDuration() {
@@ -121,18 +126,7 @@ class _TimerPageState extends State<TimerPage> {
           if (parsed > max) {
             _setController(controller, max);
           }
-          if (controller == _minutesController ||
-              controller == _hoursController) {
-            final h = _clampInt(_parseController(_hoursController), 0, 99);
-            final m = _clampInt(_parseController(_minutesController), 0, 59);
-            setState(() {
-              _minutesSlider =
-                  Duration(
-                    hours: h,
-                    minutes: m,
-                  ).inMinutes.clamp(0, 180).toDouble();
-            });
-          }
+          setState(_updateDraftDuration);
         },
         onEditingComplete: () {
           if (!enabled) return;
@@ -141,6 +135,7 @@ class _TimerPageState extends State<TimerPage> {
         },
         decoration: InputDecoration(
           hintText: hint,
+          hintStyle: TextStyle(color: Colors.grey.shade400),
           isDense: true,
           contentPadding: const EdgeInsets.symmetric(vertical: 10),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(24)),
@@ -174,7 +169,7 @@ class _TimerPageState extends State<TimerPage> {
               label,
               style: const TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
                 letterSpacing: 0.5,
               ),
             ),
@@ -186,10 +181,10 @@ class _TimerPageState extends State<TimerPage> {
 
   Future<void> _handleReset() async {
     setState(() {
-      _hoursController.text = '00';
-      _minutesController.text = '00';
-      _secondsController.text = '00';
-      _minutesSlider = 0;
+      _hoursController.text = '';
+      _minutesController.text = '';
+      _secondsController.text = '';
+      _draftDuration = Duration.zero;
     });
 
     await _service.reset();
@@ -203,12 +198,46 @@ class _TimerPageState extends State<TimerPage> {
         final status = _service.status;
         final remaining = _service.remaining;
 
-        final canStart =
+        final configuring =
             status == StudyTimerStatus.idle ||
             status == StudyTimerStatus.finished;
+
+        final bool hasSetTime =
+            configuring
+                ? _draftDuration.inSeconds > 0
+                : _service.lastDuration.inSeconds > 0;
+
+        final displayDuration =
+            configuring && _draftDuration.inSeconds > 0
+                ? _draftDuration
+                : remaining;
+
+        final totalForProgress =
+            (status == StudyTimerStatus.running ||
+                    status == StudyTimerStatus.paused)
+                ? _service.lastDuration
+                : _draftDuration;
+
+        final double progress;
+        if (totalForProgress.inSeconds <= 0) {
+          progress = 0;
+        } else if (configuring) {
+          progress = _draftDuration.inSeconds > 0 ? 1.0 : 0.0;
+        } else {
+          progress = (remaining.inSeconds / totalForProgress.inSeconds).clamp(
+            0.0,
+            1.0,
+          );
+        }
+
+        final canStart = configuring;
         final canPause = status == StudyTimerStatus.running;
         final canResume = status == StudyTimerStatus.paused;
-        final inputsEnabled = canStart;
+        final inputsEnabled = configuring;
+        final canReset =
+            status == StudyTimerStatus.running ||
+            status == StudyTimerStatus.paused ||
+            (configuring && _draftDuration.inSeconds > 0);
 
         return Scaffold(
           backgroundColor: Colors.white,
@@ -246,7 +275,7 @@ class _TimerPageState extends State<TimerPage> {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    _format(remaining),
+                    _format(displayDuration),
                     style: const TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.w500,
@@ -290,25 +319,9 @@ class _TimerPageState extends State<TimerPage> {
                 Row(
                   children: [
                     Expanded(
-                      child: Slider(
-                        value: _minutesSlider,
-                        min: 0,
-                        max: 180,
-                        activeColor: AppColors.button3Color,
-                        onChanged:
-                            inputsEnabled
-                                ? (v) {
-                                  final totalMinutes = v.round();
-                                  final hh = totalMinutes ~/ 60;
-                                  final mm = totalMinutes % 60;
-                                  setState(() {
-                                    _minutesSlider = v;
-                                    _setController(_hoursController, hh);
-                                    _setController(_minutesController, mm);
-                                    _setController(_secondsController, 0);
-                                  });
-                                }
-                                : null,
+                      child: CountdownProgressBar(
+                        progress: progress,
+                        color: Colors.blue,
                       ),
                     ),
                   ],
@@ -320,19 +333,24 @@ class _TimerPageState extends State<TimerPage> {
                     children: [
                       _actionButton(
                         'Start',
-                        canStart
+                        (canStart && hasSetTime)
                             ? () async {
-                              setState(_sanitizeInputs);
                               final d = _parseDuration();
-                              if (d.inSeconds <= 0) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Set a duration first.'),
-                                  ),
-                                );
-                                return;
-                              }
+                              if (d.inSeconds <= 0) return;
+
+                              setState(() {
+                                _draftDuration = d;
+                                _hoursController.text = '';
+                                _minutesController.text = '';
+                                _secondsController.text = '';
+                              });
+
                               await _service.start(d);
+
+                              if (!mounted) return;
+                              setState(() {
+                                _draftDuration = Duration.zero;
+                              });
                             }
                             : null,
                       ),
@@ -344,7 +362,7 @@ class _TimerPageState extends State<TimerPage> {
                         'Resume',
                         canResume ? () => _service.resume() : null,
                       ),
-                      _actionButton('Reset', _handleReset),
+                      _actionButton('Reset', canReset ? _handleReset : null),
                     ],
                   ),
                 ),

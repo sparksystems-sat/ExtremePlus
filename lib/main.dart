@@ -1,6 +1,5 @@
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/app/app_router.dart';
-import 'package:exam_practice_app/features/timer/timer_overlay.dart';
 import 'package:exam_practice_app/services/local_notifications.dart';
 import 'package:exam_practice_app/features/timer/services/study_timer_service.dart';
 import 'package:exam_practice_app/utility/appTheme.dart';
@@ -56,7 +55,6 @@ class MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: themData,
       debugShowCheckedModeBanner: false,
-      navigatorKey: TimerOverlay.key,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,

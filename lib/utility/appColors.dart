@@ -7,7 +7,7 @@ class AppColors {
   static Color button3Color = Color(0xFF82ACEF);
   static Color icon_color = Colors.red;
 
-  static const Color navSelectedBackground = Color(0xFFFFF59D);
+  static const Color navSelectedBackground = Color(0xFFFFFFA4);
   static const Color navSelectedForeground = Colors.black;
   static Color exam_choice = Colors.blue;
   static Color correct_answer = Colors.green;

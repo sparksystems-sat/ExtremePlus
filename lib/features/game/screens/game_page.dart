@@ -14,41 +14,11 @@ class GamePage extends StatefulWidget {
 class _GamePageState extends State<GamePage> {
   final PageController _pageController = PageController();
   int _pageIndex = 0;
-  bool _autoForward = true;
-  Timer? _autoTimer;
 
   @override
   void dispose() {
-    _autoTimer?.cancel();
     _pageController.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _startAutoPlay();
-  }
-
-  void _startAutoPlay() {
-    _autoTimer?.cancel();
-    _autoTimer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (!mounted) return;
-      final targetIndex = _autoForward ? 1 : 0;
-      _pageController
-          .animateToPage(
-            targetIndex,
-            duration: const Duration(milliseconds: 420),
-            curve: Curves.easeInOut,
-          )
-          .then((_) {
-            if (!mounted) return;
-            setState(() {
-              _pageIndex = targetIndex;
-              _autoForward = !_autoForward;
-            });
-          });
-    });
   }
 
   void _openSubjects() {
@@ -62,14 +32,14 @@ class _GamePageState extends State<GamePage> {
     final slides = <Widget>[
       Center(
         child: SvgPicture.asset(
-          'assets/svgs/battle.svg',
+          'assets/svgs/trophy.svg',
           height: 230,
           fit: BoxFit.contain,
         ),
       ),
       Center(
         child: SvgPicture.asset(
-          'assets/svgs/trophy.svg',
+          'assets/svgs/battle.svg',
           height: 230,
           fit: BoxFit.contain,
         ),
@@ -82,10 +52,10 @@ class _GamePageState extends State<GamePage> {
           height: 290,
           child: PageView(
             controller: _pageController,
+            physics: const BouncingScrollPhysics(),
             onPageChanged: (value) {
               setState(() {
                 _pageIndex = value;
-                _autoForward = value == 0;
               });
             },
             children: slides,
@@ -93,7 +63,7 @@ class _GamePageState extends State<GamePage> {
         ),
         const SizedBox(height: 24),
         const Text(
-          'KnowledgeBattle',
+          'Knowledge Battle',
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w700,

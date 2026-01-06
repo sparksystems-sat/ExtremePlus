@@ -16,19 +16,26 @@ class GameQuizQuestionPage extends StatefulWidget {
 class _GameQuizQuestionPageState extends State<GameQuizQuestionPage> {
   int currentQuestionIndex = 0;
   int? selectedAnswerIndex;
-  bool hasAnswered = false;
+  bool hasChecked = false;
   int _correctCount = 0;
 
   void selectAnswer(int index) {
-    if (hasAnswered) return;
-
-    final isCorrect =
-        index ==
-        widget.quizSubject.questions[currentQuestionIndex].correctAnswerIndex;
+    if (hasChecked) return;
 
     setState(() {
       selectedAnswerIndex = index;
-      hasAnswered = true;
+    });
+  }
+
+  void checkAnswer() {
+    if (hasChecked || selectedAnswerIndex == null) return;
+
+    final correctIndex =
+        widget.quizSubject.questions[currentQuestionIndex].correctAnswerIndex;
+    final isCorrect = selectedAnswerIndex == correctIndex;
+
+    setState(() {
+      hasChecked = true;
       if (isCorrect) _correctCount++;
     });
   }
@@ -38,7 +45,7 @@ class _GameQuizQuestionPageState extends State<GameQuizQuestionPage> {
       setState(() {
         currentQuestionIndex++;
         selectedAnswerIndex = null;
-        hasAnswered = false;
+        hasChecked = false;
       });
       return;
     }
@@ -60,7 +67,7 @@ class _GameQuizQuestionPageState extends State<GameQuizQuestionPage> {
   }
 
   bool get _isCorrect {
-    if (!hasAnswered || selectedAnswerIndex == null) return false;
+    if (!hasChecked || selectedAnswerIndex == null) return false;
     return selectedAnswerIndex ==
         widget.quizSubject.questions[currentQuestionIndex].correctAnswerIndex;
   }
@@ -73,13 +80,12 @@ class _GameQuizQuestionPageState extends State<GameQuizQuestionPage> {
   @override
   Widget build(BuildContext context) {
     final question = widget.quizSubject.questions[currentQuestionIndex];
+    final feedbackAccent =
+        _isCorrect ? AppColors.correct_answer : AppColors.wrong_answer;
     final feedbackBg =
         _isCorrect
             ? AppColors.correct_answer.withOpacity(0.20)
             : AppColors.wrong_answer.withOpacity(0.14);
-    final feedbackAccent =
-        _isCorrect ? AppColors.correct_answer : AppColors.wrong_answer;
-    final buttonShadowColor = feedbackAccent.withOpacity(0.45);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -197,17 +203,18 @@ class _GameQuizQuestionPageState extends State<GameQuizQuestionPage> {
                 itemBuilder: (context, index) {
                   final isSelected = selectedAnswerIndex == index;
                   final isCorrectChoice =
-                      hasAnswered && isSelected && index == _correctIndex;
+                      hasChecked && isSelected && index == _correctIndex;
                   final isWrongChoice =
-                      hasAnswered && isSelected && index != _correctIndex;
+                      hasChecked && isSelected && index != _correctIndex;
                   final borderColor =
                       isCorrectChoice
                           ? AppColors.correct_answer
                           : isWrongChoice
                           ? AppColors.wrong_answer
+                          : isSelected
+                          ? AppColors.button3Color
                           : Colors.grey.shade300;
-                  final borderWidth =
-                      (isCorrectChoice || isWrongChoice) ? 2.5 : 1.5;
+                  final borderWidth = isSelected ? 2.5 : 1.5;
 
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
@@ -246,7 +253,44 @@ class _GameQuizQuestionPageState extends State<GameQuizQuestionPage> {
                 },
               ),
             ),
-            if (hasAnswered)
+
+            if (!hasChecked && selectedAnswerIndex != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 22),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(999),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.button3Color.withOpacity(0.45),
+                        blurRadius: 0,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 54,
+                    child: ElevatedButton(
+                      onPressed: checkAnswer,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.button3Color,
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        textStyle: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      child: const Text('Check'),
+                    ),
+                  ),
+                ),
+              ),
+            if (hasChecked)
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.fromLTRB(24, 18, 24, 22),
@@ -279,7 +323,7 @@ class _GameQuizQuestionPageState extends State<GameQuizQuestionPage> {
                         borderRadius: BorderRadius.circular(999),
                         boxShadow: [
                           BoxShadow(
-                            color: buttonShadowColor,
+                            color: feedbackAccent.withOpacity(0.45),
                             blurRadius: 0,
                             offset: const Offset(0, 6),
                           ),

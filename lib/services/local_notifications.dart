@@ -45,6 +45,15 @@ class LocalNotifications {
     return const NotificationDetails(android: androidDetails);
   }
 
+  static Future<void> showTimerFinished() async {
+    await _plugin.show(
+      _timerFinishedId,
+      'Timer finished!',
+      '⏰ Your study timer has ended',
+      _timerDetails(),
+    );
+  }
+
   static Future<void> scheduleTimerFinished(DateTime at) async {
     if (!at.isAfter(DateTime.now())) {
       return;
@@ -54,7 +63,7 @@ class LocalNotifications {
     await _plugin.zonedSchedule(
       _timerFinishedId,
       'Timer finished!',
-      'Your study timer has ended.',
+      '⏰ Your study timer has ended',
       when,
       _timerDetails(),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
