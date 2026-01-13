@@ -1,9 +1,17 @@
 import 'package:exam_practice_app/l10n/language_constants.dart';
+import 'package:exam_practice_app/app/app_router.dart';
+import 'package:exam_practice_app/services/local_notifications.dart';
+import 'package:exam_practice_app/features/timer/services/study_timer_service.dart';
 import 'package:exam_practice_app/utility/appTheme.dart';
 import 'package:exam_practice_app/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'l10n/app_localizations.dart';
-void main() {
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalNotifications.init();
+  await StudyTimerService.instance.init();
+
   runApp(
     // MultiProvider(
     // //   providers: [
@@ -15,6 +23,7 @@ void main() {
     const MyApp(),
   );
 }
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
   @override
@@ -24,6 +33,7 @@ class MyApp extends StatefulWidget {
     state?.setLocale(newLocale);
   }
 }
+
 class MyAppState extends State<MyApp> {
   Locale? _locale;
   setLocale(Locale locale) {
@@ -39,6 +49,7 @@ class MyAppState extends State<MyApp> {
       setLocale(Locale(locale));
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,6 +58,7 @@ class MyAppState extends State<MyApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,
+      onGenerateRoute: AppRouter.onGenerateRoute,
       home: BottomNavigation(),
     );
   }
