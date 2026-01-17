@@ -4,6 +4,7 @@ import 'package:exam_practice_app/features/notes/screens/notes_list_page.dart';
 import 'package:exam_practice_app/features/random/screens/random_lesson_page.dart';
 import 'package:exam_practice_app/features/game/screens/game_page.dart';
 import 'package:exam_practice_app/features/timer/screens/timer_page.dart';
+import 'package:exam_practice_app/features/exam_practice/screens/grade_selection_screen.dart';
 import 'package:exam_practice_app/screen/short_notes/grade_selection_short_notes.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const RandomLessonPage());
       case AppRoutes.history:
         return MaterialPageRoute(builder: (_) => const HistoryPage());
+      case AppRoutes.examPractice:
+        return MaterialPageRoute(builder: (_) => const GradeSelectionScreen());
       default:
         return MaterialPageRoute(
           builder:

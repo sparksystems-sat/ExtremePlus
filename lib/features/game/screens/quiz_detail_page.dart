@@ -2,7 +2,6 @@ import 'package:exam_practice_app/features/game/models/quiz_model.dart';
 import 'package:exam_practice_app/features/game/screens/quiz_question_page.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class GameQuizDetailPage extends StatelessWidget {
   final QuizSubject quizSubject;
@@ -42,8 +41,8 @@ class GameQuizDetailPage extends StatelessWidget {
                 SizedBox(
                   height: 150,
                   width: 150,
-                  child: SvgPicture.asset(
-                    "assets/svgs/puzzle.svg",
+                  child: Image.asset(
+                    "assets/png/puzzle.png",
                     fit: BoxFit.contain,
                   ),
                 ),

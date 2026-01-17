@@ -1,25 +1,93 @@
 import 'package:flutter/material.dart';
 
+import 'package:exam_practice_app/utility/appColors.dart';
+
+class ShortNoteEntry {
+  final String id;
+  final String title;
+  final String body;
+
+  const ShortNoteEntry({
+    required this.id,
+    required this.title,
+    required this.body,
+  });
+}
+
+class UnderlineTabIndicator extends Decoration {
+  final Color color;
+  final double thickness;
+  final EdgeInsetsGeometry insets;
+
+  const UnderlineTabIndicator({
+    required this.color,
+    this.thickness = 6,
+    this.insets = const EdgeInsets.symmetric(horizontal: 14),
+  });
+
+  @override
+  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
+    return RoundedUnderlinePainter(
+      color: color,
+      thickness: thickness,
+      insets: insets,
+    );
+  }
+}
+
+class RoundedUnderlinePainter extends BoxPainter {
+  final Color color;
+  final double thickness;
+  final EdgeInsetsGeometry insets;
+
+  RoundedUnderlinePainter({
+    required this.color,
+    required this.thickness,
+    required this.insets,
+  });
+
+  @override
+  void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
+    final rect = offset & configuration.size!;
+    final indicatorRect = insets
+        .resolve(configuration.textDirection ?? TextDirection.ltr)
+        .deflateRect(rect);
+    final rrect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(
+        indicatorRect.left,
+        indicatorRect.bottom - thickness,
+        indicatorRect.width,
+        thickness,
+      ),
+      const Radius.circular(999),
+    );
+
+    final paint =
+        Paint()
+          ..color = color
+          ..style = PaintingStyle.fill;
+    canvas.drawRRect(rrect, paint);
+  }
+}
+
 class ShortNotesPage extends StatefulWidget {
-  const ShortNotesPage({Key? key}) : super(key: key);
+  final String subjectTitle;
+
+  const ShortNotesPage({super.key, this.subjectTitle = 'Physics'});
 
   @override
   State<ShortNotesPage> createState() => _ShortNotesPageState();
 }
 
-class _ShortNotesPageState extends State<ShortNotesPage> {
-  int _selectedChapterIndex = 0;
+class _ShortNotesPageState extends State<ShortNotesPage>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController;
+  final Set<String> _bookmarkedIds = <String>{};
 
-  final List<String> chapters = [
-    'CH 1',
-    'CH 2',
-    'CH 3',
-    'CH 4',
-    'CH 5',
-  ];
+  final List<String> chapters = ['Ch 1', 'Ch 2', 'Ch 3', 'Ch 4', 'Ch 5'];
 
   final Map<String, List<TextSpan>> chapterContents = {
-    'CH 1': [
+    'Ch 1': [
       const TextSpan(
         text: 'Cell: The Basic Unit of Life\n\n',
         style: TextStyle(fontWeight: FontWeight.bold),
@@ -41,57 +109,66 @@ class _ShortNotesPageState extends State<ShortNotesPage> {
         text: 'Cell Organelles and Their Functions:\n',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      TextSpan(children: [
-        const TextSpan(text: '- '),
-        const TextSpan(
-          text: 'Nucleus: ',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const TextSpan(
-            text: 'Contains genetic material (DNA) and controls the cell\'s activities.\n'),
-        const TextSpan(text: '- '),
-        const TextSpan(
-          text: 'Mitochondria: ',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const TextSpan(
+      TextSpan(
+        children: [
+          const TextSpan(text: '- '),
+          const TextSpan(
+            text: 'Nucleus: ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const TextSpan(
             text:
-                'Known as the powerhouse of the cell, they produce energy (ATP) via cellular respiration.\n'),
-        const TextSpan(text: '- '),
-        const TextSpan(
-          text: 'Endoplasmic Reticulum (ER): ',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const TextSpan(
+                'Contains genetic material (DNA) and controls the cell\'s activities.\n',
+          ),
+          const TextSpan(text: '- '),
+          const TextSpan(
+            text: 'Mitochondria: ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const TextSpan(
             text:
-                'Rough ER is involved in protein synthesis, and Smooth ER is involved in lipid synthesis and detoxification.\n'),
-        const TextSpan(text: '- '),
-        const TextSpan(
-          text: 'Golgi Apparatus: ',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const TextSpan(
+                'Known as the powerhouse of the cell, they produce energy (ATP) via cellular respiration.\n',
+          ),
+          const TextSpan(text: '- '),
+          const TextSpan(
+            text: 'Endoplasmic Reticulum (ER): ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const TextSpan(
             text:
-                'Modifies, sorts, and packages proteins and lipids for storage or transport out of the cell.\n'),
-        const TextSpan(text: '- '),
-        const TextSpan(
-          text: 'Lysosomes: ',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const TextSpan(
+                'Rough ER is involved in protein synthesis, and Smooth ER is involved in lipid synthesis and detoxification.\n',
+          ),
+          const TextSpan(text: '- '),
+          const TextSpan(
+            text: 'Golgi Apparatus: ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const TextSpan(
             text:
-                'Contain digestive enzymes that help break down waste materials and cellular debris.\n'),
-        const TextSpan(text: '- '),
-        const TextSpan(
-          text: 'Chloroplasts (in plant cells): ',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const TextSpan(
+                'Modifies, sorts, and packages proteins and lipids for storage or transport out of the cell.\n',
+          ),
+          const TextSpan(text: '- '),
+          const TextSpan(
+            text: 'Lysosomes: ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const TextSpan(
             text:
-                'Site of photosynthesis, contain chlorophyll that captures light energy.\n'),
-      ]),
+                'Contain digestive enzymes that help break down waste materials and cellular debris.\n',
+          ),
+          const TextSpan(text: '- '),
+          const TextSpan(
+            text: 'Chloroplasts (in plant cells): ',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const TextSpan(
+            text:
+                'Site of photosynthesis, contain chlorophyll that captures light energy.\n',
+          ),
+        ],
+      ),
     ],
-    'CH 2': [
+    'Ch 2': [
       const TextSpan(
         text: 'Nutrition in Plants\n\n',
         style: TextStyle(fontWeight: FontWeight.bold),
@@ -106,7 +183,7 @@ class _ShortNotesPageState extends State<ShortNotesPage> {
             'There are also some non-green plants and insectivorous plants that get their nutrition in other ways.\n',
       ),
     ],
-    'CH 3': [
+    'Ch 3': [
       const TextSpan(
         text: 'Transportation in Animals and Plants\n\n',
         style: TextStyle(fontWeight: FontWeight.bold),
@@ -120,7 +197,7 @@ class _ShortNotesPageState extends State<ShortNotesPage> {
             'In humans, the circulatory system includes the heart, blood, and blood vessels. In plants, xylem transports water and minerals, while phloem transports food.\n',
       ),
     ],
-    'CH 4': [
+    'Ch 4': [
       const TextSpan(
         text: 'Respiration in Organisms\n\n',
         style: TextStyle(fontWeight: FontWeight.bold),
@@ -135,7 +212,7 @@ class _ShortNotesPageState extends State<ShortNotesPage> {
             'The energy released is stored in the form of ATP (Adenosine Triphosphate), which is then used for various activities of the body.\n',
       ),
     ],
-    'CH 5': [
+    'Ch 5': [
       const TextSpan(
         text: 'Reproduction in Plants\n\n',
         style: TextStyle(fontWeight: FontWeight.bold),
@@ -151,124 +228,236 @@ class _ShortNotesPageState extends State<ShortNotesPage> {
     ],
   };
 
-  // Removed @override initState() method
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: chapters.length, vsync: this);
+  }
 
-  List<TextSpan> _getSelectedChapterContent() {
-    if (_selectedChapterIndex < 0 || _selectedChapterIndex >= chapters.length) return [];
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
-    final selectedChapter = chapters[_selectedChapterIndex];
+  static String _flattenSpanList(List<TextSpan> spans) {
+    final buffer = StringBuffer();
+    for (final span in spans) {
+      buffer.write(_flattenSpan(span));
+    }
+    return buffer.toString();
+  }
 
-    if (!chapterContents.containsKey(selectedChapter)) return [];
+  static String _flattenSpan(TextSpan span) {
+    final buffer = StringBuffer();
+    if (span.text != null) buffer.write(span.text);
+    final children = span.children;
+    if (children != null) {
+      for (final child in children) {
+        if (child is TextSpan) buffer.write(_flattenSpan(child));
+      }
+    }
+    return buffer.toString();
+  }
 
-    return chapterContents[selectedChapter]!;
+  static String _firstBoldTitle(List<TextSpan> spans) {
+    for (final span in spans) {
+      final weight = span.style?.fontWeight;
+      final text = (span.text ?? '').trim();
+      if (text.isNotEmpty && weight == FontWeight.bold) {
+        return text.replaceAll('\n', '').trim();
+      }
+    }
+    final fallback = _flattenSpanList(spans).trim();
+    if (fallback.isEmpty) return 'Short Note';
+    final firstLine = fallback.split('\n').first.trim();
+    return firstLine.isEmpty ? 'Short Note' : firstLine;
+  }
+
+  List<ShortNoteEntry> _notesForChapter(String chapter) {
+    final spans = chapterContents[chapter];
+    if (spans == null || spans.isEmpty) return const [];
+
+    final title = _firstBoldTitle(spans);
+    var fullText = _flattenSpanList(spans).trim();
+    if (fullText.startsWith(title)) {
+      fullText = fullText.substring(title.length).trimLeft();
+    }
+    fullText = fullText.replaceAll(RegExp(r'\n{3,}'), '\n\n').trim();
+
+    final paragraphs =
+        fullText
+            .split(RegExp(r'\n\s*\n'))
+            .map((p) => p.trim())
+            .where((p) => p.isNotEmpty)
+            .toList();
+
+    if (paragraphs.isEmpty) {
+      return [ShortNoteEntry(id: '$chapter-0', title: title, body: fullText)];
+    }
+
+    final entries = <ShortNoteEntry>[];
+    final buffer = StringBuffer();
+    var chunkIndex = 0;
+
+    void flush() {
+      final text = buffer.toString().trim();
+      if (text.isEmpty) return;
+      entries.add(
+        ShortNoteEntry(id: '$chapter-$chunkIndex', title: title, body: text),
+      );
+      chunkIndex++;
+      buffer.clear();
+    }
+
+    for (final paragraph in paragraphs) {
+      if (buffer.isNotEmpty) buffer.writeln('\n');
+      buffer.write(paragraph);
+      if (buffer.length >= 420) flush();
+    }
+    flush();
+
+    return entries;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Short Notes',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        title: Text(
+          '${widget.subjectTitle} - Short Notes',
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        elevation: 1,
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left, color: Colors.black, size: 28),
+          onPressed: () => Navigator.of(context).maybePop(),
+        ),
+        backgroundColor: AppColors.appbar_color,
+        elevation: 0,
+        actions: [
+          IconButton(
+            onPressed: () {
+              _tabController.animateTo(0);
+            },
+            icon: const Icon(Icons.sync, color: Colors.black),
+          ),
+        ],
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Subject Box
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(12),
+          Material(
+            color: Colors.white,
+            child: TabBar(
+              controller: _tabController,
+              isScrollable: false,
+              padding: EdgeInsets.zero,
+              labelPadding: EdgeInsets.zero,
+              dividerColor: Colors.grey.shade300,
+              dividerHeight: 1,
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.black,
+              labelStyle: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w700,
               ),
-              child: const Center(
-                child: Text(
-                  'Biology',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 41, 144, 72),
-                  ),
-                ),
+              unselectedLabelStyle: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
               ),
+              indicator: UnderlineTabIndicator(
+                color: AppColors.button3Color,
+                thickness: 8,
+                insets: const EdgeInsets.symmetric(horizontal: 12),
+              ),
+              indicatorPadding: EdgeInsets.zero,
+              tabs: chapters.map((c) => Tab(text: c)).toList(),
             ),
           ),
-
-          // First Divider
-          const Divider(
-            color: Colors.grey,
-            thickness: 0.5,
-            height: 1,
-          ),
-
-          // Chapters Row
-          SizedBox(
-            height: 50,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: chapters.length,
-              itemBuilder: (context, index) {
-                final isSelected = _selectedChapterIndex == index;
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedChapterIndex = index;
-                    });
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    margin: const EdgeInsets.only(right: 12, top: 8),
-                    // Decoration fix from previous step is still correct
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: isSelected ? Colors.lightGreen : Colors.transparent,
-                          width: 3,
-                        ),
-                      ),
-                    ),
-                    child: Text(
-                      chapters[index],
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                        color: isSelected ? Colors.black : Colors.grey[700],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-
-          // Second Divider
-          const Divider(
-            color: Colors.grey,
-            thickness: 0.5,
-            height: 1,
-          ),
-
-          // Main content area
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: RichText(
-                text: TextSpan(
-                  style: const TextStyle(fontSize: 16, color: Colors.black87, height: 1.5),
-                  // This is the call that required the fields to be initialized immediately
-                  children: _getSelectedChapterContent(),
-                ),
-              ),
+            child: TabBarView(
+              controller: _tabController,
+              children:
+                  chapters.map((chapter) {
+                    final notes = _notesForChapter(chapter);
+                    return ListView.separated(
+                      padding: const EdgeInsets.fromLTRB(16, 18, 16, 18),
+                      itemCount: notes.length,
+                      separatorBuilder: (_, __) => const SizedBox(height: 16),
+                      itemBuilder: (context, index) {
+                        final note = notes[index];
+                        final isBookmarked = _bookmarkedIds.contains(note.id);
+                        return Container(
+                          padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: AppColors.button3Color.withValues(
+                                alpha: 0.6,
+                              ),
+                              width: 1.2,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      note.title,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    visualDensity: VisualDensity.compact,
+                                    padding: EdgeInsets.zero,
+                                    constraints: const BoxConstraints(
+                                      minWidth: 36,
+                                      minHeight: 36,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (isBookmarked) {
+                                          _bookmarkedIds.remove(note.id);
+                                        } else {
+                                          _bookmarkedIds.add(note.id);
+                                        }
+                                      });
+                                    },
+                                    icon: Icon(
+                                      isBookmarked
+                                          ? Icons.bookmark
+                                          : Icons.bookmark_border,
+                                      color: AppColors.button3Color,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                note.body,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black87,
+                                  height: 1.45,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }).toList(),
             ),
           ),
         ],

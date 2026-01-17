@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:exam_practice_app/features/game/screens/game_subjects_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -31,17 +28,31 @@ class _GamePageState extends State<GamePage> {
   Widget _buildCarousel() {
     final slides = <Widget>[
       Center(
-        child: SvgPicture.asset(
-          'assets/svgs/trophy.svg',
+        child: Image.asset(
+          'assets/png/trophy.png',
           height: 230,
           fit: BoxFit.contain,
         ),
       ),
       Center(
-        child: SvgPicture.asset(
-          'assets/svgs/battle.svg',
-          height: 230,
-          fit: BoxFit.contain,
+        child: SizedBox(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Image.asset(
+                'assets/png/shield.png',
+                height: 180,
+                fit: BoxFit.contain,
+              ),
+              Image.asset(
+                'assets/png/spear.png',
+                height: 250,
+                fit: BoxFit.contain,
+              ),
+            ],
+          ),
         ),
       ),
     ];
