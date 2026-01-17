@@ -120,7 +120,12 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPageShortNotes> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ShortNotesPage()),
+                      MaterialPageRoute(
+                        builder:
+                            (context) => ShortNotesPage(
+                              subjectTitle: subject["name"] as String,
+                            ),
+                      ),
                     );
                   },
                   child: SubjectCardGeneral(

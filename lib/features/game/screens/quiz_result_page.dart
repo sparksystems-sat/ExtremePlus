@@ -108,7 +108,7 @@ class _LevelCompleted extends StatelessWidget {
             ),
             child: Column(
               children: [
-                SvgPicture.asset('assets/svgs/hero.svg', height: 120),
+                Image.asset('assets/png/hero.png', height: 120),
                 const SizedBox(height: 14),
                 const Text(
                   'Congratulations, Hero!',
@@ -186,7 +186,7 @@ class _LevelFailed extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SvgPicture.asset('assets/svgs/shield_depleted.svg', height: 120),
+            Image.asset('assets/png/shield_depleted.png', height: 120),
             const SizedBox(height: 14),
             const Text(
               'Shield Depleted',
