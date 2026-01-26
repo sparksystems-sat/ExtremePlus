@@ -1,15 +1,14 @@
-import 'package:exam_practice_app/features/game/data/quiz_data.dart';
-import 'package:exam_practice_app/features/game/models/quiz_model.dart';
-import 'package:exam_practice_app/features/game/screens/quiz_detail_page.dart';
 import 'package:exam_practice_app/widgets/subject_card_widget.dart';
 import 'package:flutter/material.dart';
+import '../data/exam_repository.dart';
+import 'practice_exam_screen.dart';
 
-class GameSubjectsPage extends StatelessWidget {
-  const GameSubjectsPage({super.key});
+class SubjectSelectionScreen extends StatelessWidget {
+  const SubjectSelectionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<QuizSubject> subjects = QuizData.getQuizSubjects();
+    final subjects = ExamRepository.getSubjects();
     final screenWidth = MediaQuery.of(context).size.width;
     final availableWidth = screenWidth - (16 * 2);
     const spacing = 16.0;
@@ -22,7 +21,7 @@ class GameSubjectsPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          'Choose your Battle',
+          'Practice Exam',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
         ),
         centerTitle: true,
@@ -48,7 +47,6 @@ class GameSubjectsPage extends StatelessWidget {
               itemCount: subjects.length,
               itemBuilder: (context, index) {
                 final subject = subjects[index];
-
                 return SubjectCardWidget(
                   subjectName: subject.name,
                   onTap: () {
@@ -56,7 +54,10 @@ class GameSubjectsPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder:
-                            (_) => GameQuizDetailPage(quizSubject: subject),
+                            (context) => PracticeExamScreen(
+                              subjectId: subject.id,
+                              subjectName: subject.name,
+                            ),
                       ),
                     );
                   },

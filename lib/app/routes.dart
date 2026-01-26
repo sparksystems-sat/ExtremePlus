@@ -7,4 +7,5 @@ class AppRoutes {
   static const String shortNotes = '/short-notes';
   static const String random = '/random';
   static const String history = '/history';
+  static const String examPractice = '/exam-practice';
 }

@@ -36,4 +36,5 @@ flutter:
     - assets/icons/
     - assets/svgs/
     - assets/svgs/subjects/
+    - assets/png/
 flutter_inte: enabled:true

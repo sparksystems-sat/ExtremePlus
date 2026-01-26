@@ -128,6 +128,7 @@ class _GameQuizQuestionPageState extends State<GameQuizQuestionPage> {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -164,8 +165,8 @@ class _GameQuizQuestionPageState extends State<GameQuizQuestionPage> {
                     ),
                     Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/svgs/shield.svg',
+                        Image.asset(
+                          'assets/png/shield.png',
                           width: 22,
                           height: 22,
                         ),
@@ -308,13 +309,11 @@ class _GameQuizQuestionPageState extends State<GameQuizQuestionPage> {
                           'assets/svgs/correct.svg',
                           height: 40,
                           width: 40,
-                          color: feedbackAccent,
                         )
                         : SvgPicture.asset(
                           'assets/svgs/wrong.svg',
                           height: 40,
                           width: 40,
-                          color: feedbackAccent,
                         ),
 
                     const SizedBox(height: 14),
