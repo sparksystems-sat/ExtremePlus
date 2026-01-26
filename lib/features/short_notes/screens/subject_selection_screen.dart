@@ -1,14 +1,14 @@
 import 'package:exam_practice_app/widgets/subject_card_widget.dart';
 import 'package:flutter/material.dart';
-import '../data/exam_repository.dart';
-import 'practice_exam_screen.dart';
+import 'short_notes_page.dart';
 
-class SubjectSelectionScreen extends StatelessWidget {
-  const SubjectSelectionScreen({super.key});
+class ShortNotesSubjectSelectionScreen extends StatelessWidget {
+  const ShortNotesSubjectSelectionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final subjects = ExamRepository.getSubjects();
+    final subjects = ['Mathematics', 'Biology', 'Physics', 'Chemistry'];
+
     final screenWidth = MediaQuery.of(context).size.width;
     final availableWidth = screenWidth - (16 * 2);
     const spacing = 16.0;
@@ -21,7 +21,7 @@ class SubjectSelectionScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
-          'Practice Exam',
+          'Short Notes',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
         ),
         centerTitle: true,
@@ -48,16 +48,13 @@ class SubjectSelectionScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final subject = subjects[index];
                 return SubjectCardWidget(
-                  subjectName: subject.name,
+                  subjectName: subject,
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder:
-                            (context) => PracticeExamScreen(
-                              subjectId: subject.id,
-                              subjectName: subject.name,
-                            ),
+                            (context) => ShortNotesPage(subjectTitle: subject),
                       ),
                     );
                   },
