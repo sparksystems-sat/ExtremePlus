@@ -4,12 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 class SubjectCardWidget extends StatelessWidget {
   final String subjectName;
   final String? svgAssetPath;
+  final Widget? leading;
   final VoidCallback onTap;
 
   const SubjectCardWidget({
     super.key,
     required this.subjectName,
     this.svgAssetPath,
+    this.leading,
     required this.onTap,
   });
 
@@ -45,7 +47,7 @@ class SubjectCardWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(24 * scale),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.10),
+                    color: Colors.black.withValues(alpha: 0.10),
                     blurRadius: 6,
                     offset: const Offset(0, 4),
                   ),
@@ -58,11 +60,13 @@ class SubjectCardWidget extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    assetPath,
-                    height: iconSize,
-                    width: iconSize,
-                  ),
+                  leading ??
+                      SvgPicture.asset(
+                        assetPath,
+                        height: iconSize,
+                        width: iconSize,
+                        fit: BoxFit.contain,
+                      ),
                   SizedBox(height: 10 * scale),
                   FittedBox(
                     fit: BoxFit.scaleDown,
