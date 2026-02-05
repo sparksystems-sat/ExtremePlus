@@ -304,6 +304,11 @@ class _BottomNavBar extends StatelessWidget {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
+                    splashFactory: NoSplash.splashFactory,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    focusColor: Colors.transparent,
                     onTap: () => onTap(i),
                     child: SizedBox(
                       height: _barHeight,
@@ -311,9 +316,7 @@ class _BottomNavBar extends StatelessWidget {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            AnimatedContainer(
-                              duration: const Duration(milliseconds: 180),
-                              curve: Curves.easeOut,
+                            Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 18,
                                 vertical: 6,

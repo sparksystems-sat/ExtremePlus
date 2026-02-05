@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/screen/grade_subject.dart';
-import 'package:exam_practice_app/screen/short_notes/grade_selection_short_notes.dart';
-import 'package:exam_practice_app/features/exam_practice/screens/grade_selection_screen.dart';
+import 'package:exam_practice_app/features/short_notes/screens/subject_selection_screen.dart';
+import 'package:exam_practice_app/features/exam_practice/screens/subject_selection_screen.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:exam_practice_app/widgets/grade_subject_container.dart';
 import 'package:exam_practice_app/widgets/medium_text.dart';
@@ -133,7 +133,7 @@ class _MyHomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const GradeSelectionScreen(),
+                          builder: (context) => const SubjectSelectionScreen(),
                         ),
                       );
                     },
@@ -148,12 +148,12 @@ class _MyHomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: GestureDetector(
                     onTap: () {
-                      // This navigates to the new StatefulWidget
                       Navigator.push(
                         context,
-                        // MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
                         MaterialPageRoute(
-                          builder: (context) => GradeSelectionPageShortNotes(),
+                          builder:
+                              (context) =>
+                                  const ShortNotesSubjectSelectionScreen(),
                         ),
                       );
                     },
@@ -164,6 +164,7 @@ class _MyHomePageState extends State<HomePage> {
                   ),
                 );
               }
+              return null;
             },
             itemCount: 2,
           ),
