@@ -1,14 +1,16 @@
-import 'package:animated_background/animated_background.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
+import 'package:exam_practice_app/app/app_router.dart';
 import 'package:exam_practice_app/screen/book_mark.dart';
 import 'package:exam_practice_app/screen/home.dart';
 import 'package:exam_practice_app/screen/offline.dart';
 import 'package:exam_practice_app/screen/more_page.dart';
-import 'package:exam_practice_app/widgets/app_bar.dart';
+import 'package:exam_practice_app/screen/alerts_page.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
+import 'package:exam_practice_app/widgets/app_bar.dart';
+
+import 'package:animated_background/animated_background.dart';
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -19,7 +21,7 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation>
     with TickerProviderStateMixin {
-  ParticleOptions particles = ParticleOptions(
+  final ParticleOptions _particles = ParticleOptions(
     baseColor: Colors.red,
     spawnOpacity: 0.1,
     opacityChangeRate: 0.25,
@@ -31,89 +33,243 @@ class _BottomNavigationState extends State<BottomNavigation>
     spawnMaxRadius: 15.0,
     particleCount: 30,
   );
+
+  final ParticleOptions _particlesOff = const ParticleOptions(particleCount: 0);
+
   int _selectedIndex = 0;
-  final List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
-    BookMarkPage(),
-    OfflinePage(),
-    MorePage(),
-  ];
+
+  late final List<GlobalKey<NavigatorState>> _navigatorKeys;
+  late final List<NavigatorObserver> _navigatorObservers;
+
+  bool _rebuildScheduled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _navigatorKeys = List.generate(5, (_) => GlobalKey<NavigatorState>());
+    _navigatorObservers = List.generate(
+      5,
+      (tabIndex) =>
+          _TabNavObserver(tabIndex: tabIndex, onChanged: _onTabNavChanged),
+    );
+  }
+
+  void _onTabNavChanged(int tabIndex) {
+    if (!mounted) return;
+    if (tabIndex != _selectedIndex) return;
+    if (_rebuildScheduled) return;
+
+    _rebuildScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _rebuildScheduled = false;
+      if (!mounted) return;
+      setState(() {});
+    });
+  }
+
+  bool _isTabRoot(int tabIndex) {
+    return !(_navigatorKeys[tabIndex].currentState?.canPop() ?? false);
+  }
+
+  void _popTabToRoot(int tabIndex) {
+    final nav = _navigatorKeys[tabIndex].currentState;
+    if (nav == null) return;
+    nav.popUntil((route) => route.isFirst);
+  }
+
   void _onItemTapped(int index) {
+    if (index == _selectedIndex) {
+      _popTabToRoot(index);
+      return;
+    }
+
     setState(() {
       _selectedIndex = index;
     });
+
+    _popTabToRoot(index);
+  }
+
+  Route<dynamic> _onGenerateTabRoute(int tabIndex, RouteSettings settings) {
+    if (settings.name == Navigator.defaultRouteName) {
+      return MaterialPageRoute(
+        settings: settings,
+        builder: (_) {
+          switch (tabIndex) {
+            case 0:
+              return const HomePage();
+            case 1:
+              return const BookMarkPage();
+            case 2:
+              return const OfflinePage();
+            case 3:
+              return const MorePage();
+            case 4:
+              return const AlertsPage();
+            default:
+              return const HomePage();
+          }
+        },
+      );
+    }
+
+    return AppRouter.onGenerateRoute(settings);
   }
 
   @override
   Widget build(BuildContext context) {
-    final items = <_NavItems>[
-      _NavItems(
-        icon: const FaIcon(FontAwesomeIcons.house),
+    final tabs = <_NavTabConfig>[
+      _NavTabConfig(
         label: t(context).bottom_home,
+        activeIcon: Icons.home,
+        inactiveIcon: Icons.home_outlined,
       ),
-      _NavItems(
-        icon: const FaIcon(FontAwesomeIcons.solidBookmark),
+      _NavTabConfig(
         label: t(context).bottom_book_mark,
+        activeIcon: Icons.bookmark,
+        inactiveIcon: Icons.bookmark_border,
       ),
-      _NavItems(
-        icon: const Icon(Icons.wifi_off),
+      _NavTabConfig(
         label: t(context).bottom_offline,
+        activeIcon: Icons.wifi_off,
+        inactiveIcon: Icons.wifi_off_outlined,
       ),
-      const _NavItems(
-        icon: FaIcon(FontAwesomeIcons.ellipsisVertical),
+      const _NavTabConfig(
         label: 'More',
+        activeIcon: Icons.more_vert,
+        inactiveIcon: Icons.more_vert,
+      ),
+      const _NavTabConfig(
+        label: 'Alerts',
+        activeIcon: Icons.notifications,
+        inactiveIcon: Icons.notifications_none,
       ),
     ];
 
-    return Scaffold(
-      bottomNavigationBar: _BottomNavBar(
-        items: items,
-        selectedIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
-      body: AnimatedBackground(
-        vsync: this,
-        behaviour: RandomParticleBehaviour(
-          options: particles,
-          paint:
-              Paint()
-                ..strokeWidth = 10.0
-                ..style = PaintingStyle.stroke,
-        ),
-        child: SafeArea(
-          child: CustomScrollView(
-            slivers: <Widget>[
-              App_Bar(),
-              SliverFillRemaining(
-                child: _widgetOptions.elementAt(_selectedIndex),
-              ),
-            ],
+    final currentNav = _navigatorKeys[_selectedIndex].currentState;
+    final allowSystemPop =
+        (currentNav == null || !currentNav.canPop())
+            ? _selectedIndex == 0
+            : false;
+
+    final isRoot = _isTabRoot(_selectedIndex);
+
+    final content = IndexedStack(
+      index: _selectedIndex,
+      children: List.generate(tabs.length, (i) {
+        return Navigator(
+          key: _navigatorKeys[i],
+          observers: [_navigatorObservers[i]],
+          onGenerateRoute: (settings) => _onGenerateTabRoute(i, settings),
+        );
+      }),
+    );
+
+    return PopScope(
+      canPop: allowSystemPop,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
+
+        final nav = _navigatorKeys[_selectedIndex].currentState;
+        if (nav != null && nav.canPop()) {
+          nav.pop();
+          return;
+        }
+
+        if (_selectedIndex != 0) {
+          setState(() {
+            _selectedIndex = 0;
+          });
+        }
+      },
+      child: Scaffold(
+        body: AnimatedBackground(
+          vsync: this,
+          behaviour: RandomParticleBehaviour(
+            options: isRoot ? _particles : _particlesOff,
+            paint:
+                Paint()
+                  ..strokeWidth = 10.0
+                  ..style = PaintingStyle.stroke,
           ),
+          child: SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                if (isRoot) const App_Bar(),
+                SliverFillRemaining(hasScrollBody: true, child: content),
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: _BottomNavBar(
+          tabs: tabs,
+          selectedIndex: _selectedIndex,
+          showSelectedBackground: isRoot,
+          onTap: _onItemTapped,
         ),
       ),
     );
   }
 }
 
-class _NavItems {
-  final Widget icon;
+class _NavTabConfig {
   final String label;
+  final IconData activeIcon;
+  final IconData inactiveIcon;
 
-  const _NavItems({required this.icon, required this.label});
+  const _NavTabConfig({
+    required this.label,
+    required this.activeIcon,
+    required this.inactiveIcon,
+  });
+}
+
+class _TabNavObserver extends NavigatorObserver {
+  _TabNavObserver({required this.tabIndex, required this.onChanged});
+
+  final int tabIndex;
+  final void Function(int tabIndex) onChanged;
+
+  void _notify() => onChanged(tabIndex);
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    super.didPush(route, previousRoute);
+    _notify();
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    super.didPop(route, previousRoute);
+    _notify();
+  }
+
+  @override
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    super.didRemove(route, previousRoute);
+    _notify();
+  }
+
+  @override
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+    super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
+    _notify();
+  }
 }
 
 class _BottomNavBar extends StatelessWidget {
   const _BottomNavBar({
-    required this.items,
+    required this.tabs,
     required this.selectedIndex,
+    required this.showSelectedBackground,
     required this.onTap,
   });
 
-  static const double _barHeight = 79;
-  static const double _selectedHeight = 92;
+  static const double _barHeight = 60;
 
-  final List<_NavItems> items;
+  final List<_NavTabConfig> tabs;
   final int selectedIndex;
+  final bool showSelectedBackground;
   final ValueChanged<int> onTap;
 
   @override
@@ -128,108 +284,92 @@ class _BottomNavBar extends StatelessWidget {
         height: _barHeight,
         decoration: BoxDecoration(
           color: bg,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(24),
-            topRight: Radius.circular(24),
-          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.16),
+              color: Colors.black.withValues(alpha: 0.16),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final itemCount = items.length;
-              final itemWidth = constraints.maxWidth / itemCount;
-              final highlightLeft = itemWidth * selectedIndex;
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Row(
+            children: List.generate(tabs.length, (i) {
+              final tab = tabs[i];
+              final active = i == selectedIndex;
+              final showBg = active && showSelectedBackground;
 
-              return Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned(
-                    left: highlightLeft,
-                    bottom: 0,
-                    width: itemWidth,
-                    height: _selectedHeight,
-                    child: IgnorePointer(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: selectedBg,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(14),
-                            topRight: Radius.circular(14),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.12),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
+              return Expanded(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () => onTap(i),
+                    child: SizedBox(
+                      height: _barHeight,
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AnimatedContainer(
+                              duration: const Duration(milliseconds: 180),
+                              curve: Curves.easeOut,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
+                                color: showBg ? selectedBg : Colors.transparent,
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow:
+                                    showBg
+                                        ? [
+                                          BoxShadow(
+                                            offset: const Offset(0, 2),
+                                            blurRadius: 8,
+                                            color: Colors.black.withValues(
+                                              alpha: 0.12,
+                                            ),
+                                          ),
+                                        ]
+                                        : [],
+                              ),
+                              child: Icon(
+                                active ? tab.activeIcon : tab.inactiveIcon,
+                                color: fg,
+                                size: 20,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  tab.label,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  style: TextStyle(
+                                    color: fg,
+                                    fontSize: 13,
+                                    fontWeight:
+                                        active
+                                            ? FontWeight.w800
+                                            : FontWeight.w500,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  Row(
-                    children: List.generate(itemCount, (i) {
-                      final d = items[i];
-                      final active = i == selectedIndex;
-
-                      return Expanded(
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(14),
-                            onTap: () => onTap(i),
-                            child: SizedBox(
-                              height: _barHeight,
-                              child: Center(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconTheme(
-                                      data: IconThemeData(color: fg, size: 25),
-                                      child: d.icon,
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 6,
-                                      ),
-                                      child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: Text(
-                                          d.label,
-                                          maxLines: 1,
-                                          softWrap: false,
-                                          style: TextStyle(
-                                            color: fg,
-                                            fontSize: 14,
-                                            fontWeight:
-                                                active
-                                                    ? FontWeight.w700
-                                                    : FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-                ],
+                ),
               );
-            },
+            }),
           ),
         ),
       ),

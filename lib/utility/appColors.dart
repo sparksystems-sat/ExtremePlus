@@ -12,4 +12,5 @@ class AppColors {
   static Color exam_choice = Colors.blue;
   static Color correct_answer = Colors.green;
   static Color wrong_answer = Colors.red;
+  static Color appbar_color = const Color(0xFFDFE1E5);
 }

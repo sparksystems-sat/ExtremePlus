@@ -80,7 +80,7 @@ class _NextLevel extends StatelessWidget {
             ),
             child: Column(
               children: [
-                SvgPicture.asset('assets/svgs/mountain.svg', height: 130),
+                Image.asset('assets/png/mountain.png', height: 130),
                 const SizedBox(height: 14),
                 const Text(
                   'Welcome to Gra Azmach',

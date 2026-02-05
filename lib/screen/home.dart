@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/screen/grade_subject.dart';
 import 'package:exam_practice_app/screen/short_notes/grade_selection_short_notes.dart';
+import 'package:exam_practice_app/features/exam_practice/screens/grade_selection_screen.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:exam_practice_app/widgets/grade_subject_container.dart';
 import 'package:exam_practice_app/widgets/medium_text.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:exam_practice_app/screen/grade_selection.dart';
 // import 'package:exam_practice_app/screen/exam_subjects.dart';
 
 class HomePage extends StatefulWidget {
@@ -98,7 +98,6 @@ class _MyHomePageState extends State<HomePage> {
                     activeIndex: activeIndex,
 
                     count: images.length,
-                  
                   ),
                 ],
               ),
@@ -131,12 +130,10 @@ class _MyHomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: GestureDetector(
                     onTap: () {
-                      // This navigates to the new StatefulWidget
                       Navigator.push(
                         context,
-                        // MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
                         MaterialPageRoute(
-                          builder: (context) => GradeSelectionPage(),
+                          builder: (context) => const GradeSelectionScreen(),
                         ),
                       );
                     },
@@ -207,8 +204,6 @@ class _MyHomePageState extends State<HomePage> {
               final grade = grades[index];
               return GestureDetector(
                 onTap: () {
-                 
-
                   Navigator.push(
                     context,
                     MaterialPageRoute(
