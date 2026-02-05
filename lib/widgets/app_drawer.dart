@@ -1,5 +1,6 @@
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 import 'package:exam_practice_app/features/profile/screens/profile_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -162,21 +163,26 @@ class _AppDrawerState extends State<AppDrawer> {
                           style: TextStyle(fontWeight: FontWeight.w800),
                         ),
                       ),
-                      InkWell(
-                        onTap: () => Navigator.of(context).pop(),
-                        borderRadius: BorderRadius.circular(5),
-                        child: Container(
-                          width: 26,
-                          height: 26,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.black),
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.close,
-                              size: 16,
-                              color: Colors.black,
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(7),
+                          onTap: () => Navigator.of(context).pop(),
+                          child: Container(
+                            width: 22,
+                            height: 22,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              border: Border.all(
+                                color: Colors.black.withValues(alpha: 0.18),
+                              ),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.close,
+                                size: 14,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),
@@ -184,52 +190,86 @@ class _AppDrawerState extends State<AppDrawer> {
                     ],
                   ),
                   const SizedBox(height: 8),
-                  DropdownButtonFormField<String>(
-                    value: _selectedTheme,
-                    items: const [
-                      DropdownMenuItem(value: 'Light', child: Text('Light')),
-                      DropdownMenuItem(value: 'Dark', child: Text('Dark')),
-                    ],
-                    onChanged: (v) {
-                      if (v == null) return;
-                      setState(() => _selectedTheme = v);
-                    },
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 10,
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints.tightFor(width: 236),
+                      child: DropdownButtonFormField<String>(
+                        value: _selectedTheme,
+                        icon: Transform.rotate(
+                          angle: -math.pi / 2,
+                          child: const Icon(Icons.chevron_left),
+                        ),
+                        items: const [
+                          DropdownMenuItem(
+                            value: 'Light',
+                            child: Text('Light'),
+                          ),
+                          DropdownMenuItem(value: 'Dark', child: Text('Dark')),
+                        ],
+                        onChanged: (v) {
+                          if (v == null) return;
+                          setState(() => _selectedTheme = v);
+                        },
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 10,
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                      border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 10),
+                  const Divider(
+                    indent: 8,
+                    endIndent: 8,
+                    height: 18,
+                    thickness: 1,
+                  ),
+                  const SizedBox(height: 10),
                   const Text(
                     'Font Size',
                     style: TextStyle(fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(height: 8),
-                  DropdownButtonFormField<String>(
-                    value: _selectedFontSize,
-                    items: const [
-                      DropdownMenuItem(value: 'Small', child: Text('Small')),
-                      DropdownMenuItem(
-                        value: 'Medium (default)',
-                        child: Text('Medium (default)'),
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints.tightFor(width: 236),
+                      child: DropdownButtonFormField<String>(
+                        value: _selectedFontSize,
+                        icon: Transform.rotate(
+                          angle: -math.pi / 2,
+                          child: const Icon(Icons.chevron_left),
+                        ),
+                        items: const [
+                          DropdownMenuItem(
+                            value: 'Small',
+                            child: Text('Small'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Medium (default)',
+                            child: Text('Medium (default)'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Large',
+                            child: Text('Large'),
+                          ),
+                        ],
+                        onChanged: (v) {
+                          if (v == null) return;
+                          setState(() => _selectedFontSize = v);
+                        },
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 10,
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
                       ),
-                      DropdownMenuItem(value: 'Large', child: Text('Large')),
-                    ],
-                    onChanged: (v) {
-                      if (v == null) return;
-                      setState(() => _selectedFontSize = v);
-                    },
-                    decoration: const InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 10,
-                      ),
-                      border: OutlineInputBorder(),
                     ),
                   ),
                 ],
@@ -285,7 +325,6 @@ class _AppDrawerState extends State<AppDrawer> {
                 ],
               ),
             ),
-            const Divider(height: 1),
             Expanded(
               child: ListView(
                 padding: EdgeInsets.zero,
@@ -411,7 +450,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                   _DrawerItem(
                     leading: const Icon(
-                      Icons.privacy_tip_outlined,
+                      Icons.lock_outline,
                       color: Colors.black87,
                     ),
                     title: 'Privacy Policy',

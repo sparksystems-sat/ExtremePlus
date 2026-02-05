@@ -54,6 +54,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
         ],
         backgroundColor: Colors.white,
         elevation: 0,
+        bottom: const PreferredSize(
+          preferredSize: Size.fromHeight(1),
+          child: Divider(height: 1, thickness: 1),
+        ),
       ),
       body: SafeArea(
         child: ListView(

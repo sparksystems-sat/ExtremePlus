@@ -190,6 +190,10 @@ class _BottomNavigationState extends State<BottomNavigation>
                   backgroundColor: AppColors.main_background_color,
                   elevation: 0,
                   scrolledUnderElevation: 0,
+                  bottom: const PreferredSize(
+                    preferredSize: Size.fromHeight(1),
+                    child: Divider(height: 1, thickness: 1),
+                  ),
                   leadingWidth: 64,
                   leading: Builder(
                     builder: (context) {
