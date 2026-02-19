@@ -5,6 +5,8 @@ import 'package:exam_practice_app/features/timer/services/study_timer_service.da
 import 'package:exam_practice_app/utility/appTheme.dart';
 import 'package:exam_practice_app/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
@@ -13,11 +15,11 @@ Future<void> main() async {
   await StudyTimerService.instance.init();
 
   runApp(
-    // MultiProvider(
-    // //   providers: [
-    // //     // BlocProvider<LanguagSwitch>(create: (context) => LanguagSwitch()),
-    // //     // BlocProvider(create: (context) => LocaleBloc()),
-    // //   ],
+    // MultiBlocProvider(
+    //   providers: [
+    //     // BlocProvider<LanguagSwitch>(create: (context) => LanguagSwitch()),
+    //     // BlocProvider(create: (context) => LocaleBloc()),
+    //   ],
     //   child: const MyApp(),
     // ),
     const MyApp(),
