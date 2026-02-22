@@ -12,4 +12,6 @@ class ExamGrade {
     required this.icon,
     required this.color,
   });
+
+  static fromJson(e) {}
 }

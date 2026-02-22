@@ -1,5 +1,11 @@
+import 'package:exam_practice_app/bloc/subject/subject_selection_bloc.dart';
+import 'package:exam_practice_app/bloc/subject/subject_selection_event.dart';
+import 'package:exam_practice_app/bloc/subject/subject_selection_state.dart';
+import 'package:exam_practice_app/repos/subject_repo.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
+import 'package:exam_practice_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../data/exam_repository.dart';
 import '../models/exam_subject.dart';
 import 'practice_exam_screen.dart';
@@ -17,57 +23,78 @@ class SubjectSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final subjects = ExamRepository.getSubjects();
+    return RepositoryProvider(
+      create: (context) => SubjectSelectionRepository(),
+      child: BlocProvider(
+        create:
+            (context) => SubjectctSelectionBloc(
+              RepositoryProvider.of<SubjectSelectionRepository>(context),
+            )..add(SubjectctSelectionInitialEvent()),
 
-    return Scaffold(
-      backgroundColor: AppColors.main_background_color,
-      appBar: AppBar(
-        title: const Text(
-          'Select Subject',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left, color: Colors.black, size: 28),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-        backgroundColor: AppColors.appbar_color,
-        elevation: 0,
-      ),
-      body: CustomScrollView(
-        slivers: [
-          const SliverToBoxAdapter(child: SizedBox(height: 20)),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            sliver: SliverGrid.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 16.0,
-                crossAxisSpacing: 16.0,
-                childAspectRatio: 0.95,
-              ),
-              itemCount: subjects.length,
-              itemBuilder: (context, index) {
-                final subject = subjects[index];
-                return _SubjectCard(
-                  subject: subject,
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) => PracticeExamScreen(
-                              subjectId: subject.id,
-                              subjectName: subject.name,
-                            ),
-                      ),
+        child: BlocBuilder<SubjectctSelectionBloc, SubjectctSelectionState>(
+          builder: (context, state) {
+            if (state is SubjectctSelectionInitialState) {
+              return Scaffold(body: Center(child: LoadingIndicator()));
+            }
+            if (state is SubjectctSelectionSuccessState) {
+              return Scaffold(
+                backgroundColor: AppColors.main_background_color,
+                appBar: AppBar(
+                  title: Text(
+                    'Select Subject - $gradeLabel',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  centerTitle: true,
+                  leading: IconButton(
+                    icon: const Icon(
+                      Icons.chevron_left,
+                      color: Colors.black,
+                      size: 28,
+                    ),
+                    onPressed: () => Navigator.of(context).maybePop(),
+                  ),
+                  backgroundColor: AppColors.appbar_color,
+                  elevation: 0,
+                ),
+                body: GridView.builder(
+                  padding: const EdgeInsets.all(16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 0.8,
+                  ),
+                  itemCount: subjects.length,
+                  itemBuilder: (context, index) {
+                    final subject = subjects[index];
+                    return _SubjectCard(
+                      subject: subject,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => PracticeExamScreen(
+                                  subjectId: subject.id,
+                                  subjectName: subject.name,
+                                ),
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
-            ),
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: 30)),
-        ],
+                ),
+              );
+            } else if (state is SubjectctSelectionErrorState) {
+              return const Center(child: Text("Failed to load grades"));
+            } else {
+              return Scaffold(body: Center(child: LoadingIndicator()));
+            }
+          },
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/app/app_router.dart';
+import 'package:exam_practice_app/repos/home_repo.dart';
 import 'package:exam_practice_app/services/local_notifications.dart';
 import 'package:exam_practice_app/features/timer/services/study_timer_service.dart';
 import 'package:exam_practice_app/utility/appTheme.dart';
@@ -61,7 +62,10 @@ class MyAppState extends State<MyApp> {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,
       onGenerateRoute: AppRouter.onGenerateRoute,
-      home: BottomNavigation(),
+      home: RepositoryProvider(
+        create: (context) => HomeRepository(),
+        child: BottomNavigation(),
+      ),
     );
   }
 }
