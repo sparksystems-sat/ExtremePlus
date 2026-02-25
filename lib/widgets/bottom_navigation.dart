@@ -1,12 +1,12 @@
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/app/app_router.dart';
 import 'package:exam_practice_app/screen/book_mark.dart';
-import 'package:exam_practice_app/screen/home.dart';
+import 'package:exam_practice_app/features/home/screens/home_page.dart';
 import 'package:exam_practice_app/screen/offline.dart';
 import 'package:exam_practice_app/screen/more_page.dart';
 import 'package:exam_practice_app/screen/alerts_page.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
-import 'package:exam_practice_app/widgets/app_bar.dart';
+import 'package:exam_practice_app/widgets/app_drawer.dart';
 
 import 'package:animated_background/animated_background.dart';
 
@@ -183,6 +183,47 @@ class _BottomNavigationState extends State<BottomNavigation>
         }
       },
       child: Scaffold(
+        drawer: const AppDrawer(),
+        appBar:
+            (_selectedIndex == 0 && isRoot)
+                ? AppBar(
+                  backgroundColor: AppColors.main_background_color,
+                  elevation: 0,
+                  scrolledUnderElevation: 0,
+                  bottom: const PreferredSize(
+                    preferredSize: Size.fromHeight(1),
+                    child: Divider(height: 1, thickness: 1),
+                  ),
+                  leadingWidth: 64,
+                  leading: Builder(
+                    builder: (context) {
+                      return IconButton(
+                        onPressed: () => Scaffold.of(context).openDrawer(),
+                        icon: const CircleAvatar(
+                          radius: 18,
+                          backgroundImage: AssetImage(
+                            'assets/svgs/profile.jpeg',
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.help_outline,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.sync, color: Colors.black87),
+                    ),
+                    const SizedBox(width: 4),
+                  ],
+                )
+                : null,
         body: AnimatedBackground(
           vsync: this,
           behaviour: RandomParticleBehaviour(
@@ -192,14 +233,7 @@ class _BottomNavigationState extends State<BottomNavigation>
                   ..strokeWidth = 10.0
                   ..style = PaintingStyle.stroke,
           ),
-          child: SafeArea(
-            child: CustomScrollView(
-              slivers: [
-                if (isRoot) const App_Bar(),
-                SliverFillRemaining(hasScrollBody: true, child: content),
-              ],
-            ),
-          ),
+          child: SafeArea(child: content),
         ),
         bottomNavigationBar: _BottomNavBar(
           tabs: tabs,

@@ -37,4 +37,5 @@ flutter:
     - assets/svgs/
     - assets/svgs/subjects/
     - assets/png/
+    - assets/svgs/grade/
 flutter_inte: enabled:true
