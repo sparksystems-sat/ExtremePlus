@@ -72,11 +72,7 @@ class GradeSelectionScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder:
-                                    (context) => SubjectSelectionScreen(
-                                      gradeId: grade.id,
-                                      gradeLabel: grade.label,
-                                    ),
+                                builder: (context) => SubjectSelectionScreen(),
                               ),
                             );
                           },

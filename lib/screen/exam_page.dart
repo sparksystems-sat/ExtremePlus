@@ -64,7 +64,6 @@ class _QuizPageState extends State<QuizPage> {
 
   void selectAnswer(int qIndex, int optionIndex) {
     // if (selectedAnswers.containsKey(qIndex)) return;
-
     // setState(() {
     //   selectedAnswers[qIndex] = optionIndex;
     //   answeredCount++;
@@ -88,11 +87,13 @@ class _QuizPageState extends State<QuizPage> {
       }
     }
   }
+
   void toggleExplanation(int qIndex) {
     setState(() {
       showExplanation[qIndex] = !(showExplanation[qIndex] ?? false);
     });
   }
+
   void toggleAllExplanations(bool value) {
     setState(() {
       showAllExplanations = value;

@@ -9,6 +9,7 @@ import 'package:exam_practice_app/model/home_page_layout.dart';
 import 'package:exam_practice_app/repos/home_repo.dart';
 import 'package:exam_practice_app/screen/grade_subject.dart';
 import 'package:exam_practice_app/screen/short_notes/grade_selection_short_notes.dart';
+import 'package:exam_practice_app/features/exam_practice/screens/grade_selection_screen.dart';
 import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:exam_practice_app/widgets/grade_subject_container.dart';
 import 'package:exam_practice_app/widgets/loading_indicator.dart';
@@ -133,51 +134,48 @@ class _MyHomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       // Inside the SliverGrid.builder in HomePage's build method
 
-                      if (index == 0) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => const GradeSelectionScreen(),
-                                ),
-                              );
-                            },
-                            child: GradeSubjectContainer(
-                              containerTitle: "${t(context).exam} ",
-                              icon: FontAwesomeIcons.circleQuestion,
-                            ),
-                          ),
-                        );
-                      } else if (index == 1) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: GestureDetector(
-                            onTap: () {
-                              // This navigates to the new StatefulWidget
-                              Navigator.push(
-                                context,
-                                // MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) =>
-                                          GradeSelectionPageShortNotes(),
-                                ),
-                              );
-                            },
-                            child: GradeSubjectContainer(
-                              containerTitle: "${t(context).short_note} ",
-                              icon: FontAwesomeIcons.bookOpenReader,
-                            ),
-                          ),
-                        );
-                      }
+              if (index == 0) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const GradeSelectionScreen(),
+                        ),
+                      );
                     },
-                    itemCount: 2,
+                    child: GradeSubjectContainer(
+                      containerTitle: "${t(context).exam} ",
+                      icon: FontAwesomeIcons.circleQuestion,
+                    ),
                   ),
+                );
+              } else if (index == 1) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: GestureDetector(
+                    onTap: () {
+                      // This navigates to the new StatefulWidget
+                      Navigator.push(
+                        context,
+                        // MaterialPageRoute(builder: (context) => ExamSubjectsPage()),
+                        MaterialPageRoute(
+                          builder: (context) => GradeSelectionPageShortNotes(),
+                        ),
+                      );
+                    },
+                    child: GradeSubjectContainer(
+                      containerTitle: "${t(context).short_note} ",
+                      icon: FontAwesomeIcons.bookOpenReader,
+                    ),
+                  ),
+                );
+              }
+            },
+            itemCount: 2,
+          ),
 
                   SliverList(
                     delegate: SliverChildListDelegate([

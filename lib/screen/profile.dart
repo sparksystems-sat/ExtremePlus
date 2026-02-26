@@ -38,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 leading: Icon(FontAwesomeIcons.circleUser, color: Colors.blue),
                 title: body_text_page(
                   text_value:
-                      t(context).bottom_profile + "  " + index.toString(),
+                      "${t(context).bottom_profile}  $index",
                 ),
                 subtitle: body_text_page(
                   text_value: "This is a subtitle for item $index",
