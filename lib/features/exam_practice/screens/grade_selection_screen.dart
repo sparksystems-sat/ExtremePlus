@@ -1,8 +1,11 @@
 import 'package:exam_practice_app/bloc/grade/grade_bloc.dart';
 import 'package:exam_practice_app/bloc/grade/grade_event.dart';
 import 'package:exam_practice_app/bloc/grade/grade_state.dart';
+import 'package:exam_practice_app/bloc/subject/subject_selection_bloc.dart';
+import 'package:exam_practice_app/bloc/subject/subject_selection_event.dart';
 import 'package:exam_practice_app/model/home_page_layout.dart';
 import 'package:exam_practice_app/repos/grade_repo.dart';
+import 'package:exam_practice_app/repos/subject_repo.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +20,12 @@ class GradeSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) => GradeRepository(),
+      create: (context) => SubjectSelectionRepository(),
       child: BlocProvider(
         create:
-            (context) =>
-                GradeBloc(RepositoryProvider.of<GradeRepository>(context))
-                  ..add(GradeInitialEvent()),
+            (context) => SubjectctSelectionBloc(
+              RepositoryProvider.of<SubjectSelectionRepository>(context),
+            )..add(SubjectctSelectionInitialEvent()),
 
         child: Scaffold(
           backgroundColor: AppColors.main_background_color,

@@ -12,7 +12,6 @@ class HomeInitialState extends HomeState {
 
 class HomeSuccessState extends HomeState {
   HomeSuccessState(this.gradeModel);
-
   final List<GradeModel> gradeModel;
   @override
   List<Object?> get props => [gradeModel];
