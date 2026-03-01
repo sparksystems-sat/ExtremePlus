@@ -15,7 +15,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bottom_home => 'Home';
 
   @override
-  String get bottom_book_mark => 'Favies';
+  String get bottom_book_mark => 'Book Mark';
 
   @override
   String get bottom_offline => 'Offline';
@@ -39,8 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exit => 'Exit';
 
   @override
-  String get examInstructions =>
-      'Please read the instructions carefully before starting the exam.';
+  String get examInstructions => 'Please read the instructions carefully before starting the exam.';
 
   @override
   String get submitExam => 'Submit Exam';
@@ -95,4 +94,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exam_title => 'Exam Title';
+
+  @override
+  String get select_subject => 'Select Subject';
+
+  @override
+  String get practice_exam => 'Practice Exam';
 }

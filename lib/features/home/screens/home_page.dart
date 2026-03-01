@@ -1,12 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:exam_practice_app/bloc/home/home_bloc.dart';
+import 'package:exam_practice_app/bloc/home/home_event.dart';
+import 'package:exam_practice_app/bloc/home/home_state.dart';
 import 'package:exam_practice_app/features/exam_practice/screens/subject_selection_screen.dart';
 import 'package:exam_practice_app/features/home/widgets/learning_card.dart';
 import 'package:exam_practice_app/features/home/widgets/gamification_card.dart';
 import 'package:exam_practice_app/features/short_notes/screens/subject_selection_screen.dart';
+import 'package:exam_practice_app/repos/home_repo.dart';
 import 'package:exam_practice_app/screen/grade_subject.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/subject_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -180,32 +185,48 @@ class _HomePageState extends State<HomePage> {
       },
     ];
 
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        childAspectRatio: 1.4,
+    return BlocProvider(
+      create:
+          (context) =>
+              HomeBloc(RepositoryProvider.of<HomeRepository>(context))
+                ..add(HomeInitialEvent()),
+      child:  BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: 1.4,
+            ),
+            itemCount: grades.length,
+            itemBuilder: (context, index) {
+              final grade = grades[index];
+              return SubjectCardWidget(
+                subjectName: grade['label'] as String,
+                svgAssetPath: grade['svg'] as String,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (_) =>
+                              GradeSubjectPage(grade: (grade['grade'] as int)),
+                    ),
+                  );
+                },
+              );
+            },
+          );
+
+
+
+
+          
+        },
       ),
-      itemCount: grades.length,
-      itemBuilder: (context, index) {
-        final grade = grades[index];
-        return SubjectCardWidget(
-          subjectName: grade['label'] as String,
-          svgAssetPath: grade['svg'] as String,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder:
-                    (_) => GradeSubjectPage(grade: (grade['grade'] as int)),
-              ),
-            );
-          },
-        );
-      },
     );
   }
 

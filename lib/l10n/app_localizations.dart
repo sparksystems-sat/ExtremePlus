@@ -268,6 +268,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Exam Title'**
   String get exam_title;
+
+  /// No description provided for @select_subject.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Subject'**
+  String get select_subject;
+
+  /// No description provided for @practice_exam.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice Exam'**
+  String get practice_exam;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

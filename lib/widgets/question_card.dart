@@ -1,16 +1,15 @@
-import 'package:exam_practice_app/features/exam_practice/models/exam_question.dart';
+import 'package:exam_practice_app/model/question_model.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:flutter/material.dart';
 
 class QuestionCard extends StatelessWidget {
-  final ExamQuestion question;
+  final QuestionModel question;
   final int questionNumber;
   final int? selectedAnswerIndex;
   final bool isInstantAnswerEnabled;
   final bool showExplanation;
   final Function(int) onSelectAnswer;
   final VoidCallback onToggleExplanation;
-
   const QuestionCard({
     super.key,
     required this.question,
@@ -28,11 +27,12 @@ class QuestionCard extends StatelessWidget {
     }
 
     if (isInstantAnswerEnabled) {
-      if (optionIndex == question.correctAnswerIndex) {
+      if (optionIndex == question.options.indexWhere((opt) => opt.is_correct)) {
         return AppColors.correct_answer;
       }
       if (optionIndex == selectedAnswerIndex &&
-          selectedAnswerIndex != question.correctAnswerIndex) {
+          selectedAnswerIndex !=
+              question.options.indexWhere((opt) => opt.is_correct)) {
         return AppColors.wrong_answer;
       }
       return Colors.grey.shade300;
@@ -57,14 +57,11 @@ class QuestionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Q$questionNumber',
+              'Q$questionNumber.${question.text}',
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            Text(
-              question.question,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
+
             const SizedBox(height: 16),
             ...List.generate(
               question.options.length,
@@ -99,9 +96,10 @@ class QuestionCard extends StatelessWidget {
     final optionLabel = String.fromCharCode(65 + index);
     final isSelected = selectedAnswerIndex == index;
     final showCorrect = isInstantAnswerEnabled && selectedAnswerIndex != null;
-    final isCorrect = showCorrect && index == question.correctAnswerIndex;
+    final isCorrect =
+        showCorrect &&
+        index == question.options.indexWhere((opt) => opt.is_correct);
     final emphasizeBorder = isSelected || isCorrect;
-
     return GestureDetector(
       onTap: () => onSelectAnswer(index),
       child: Container(
@@ -121,7 +119,9 @@ class QuestionCard extends StatelessWidget {
               '$optionLabel. ',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
-            Expanded(child: Text(option, style: const TextStyle(fontSize: 16))),
+            Expanded(
+              child: Text(option.option_text, style: const TextStyle(fontSize: 16)),
+            ),
           ],
         ),
       ),

@@ -27,5 +27,7 @@
   "biology": "Biology",
   "physics": "Physics",
   "chemistry": "Chemistry",
-  "exam_title": "Exam Title"
+  "exam_title": "Exam Title",
+  "select_subject":"Select Subject",
+  "practice_exam":"Practice Exam"
 }

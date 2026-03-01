@@ -4,7 +4,7 @@ final student_api = 'Students';
 final subject_api = 'Subjects';
 final grade_api = 'Grades';
 final chapter_api = 'Chapters';
-final entranc_exam_api = 'EntranceExams';
+final entranc_exam_api = 'EntranceExamSubjectss';
 
 class StudentEndpoint {
   static final String getCourses = '${ApiConfig.baseUrl}${student_api}/get_all';
@@ -37,6 +37,6 @@ class ChapterEndpoint {
 class EntranceExamEndpoint {
   static final String getEntranceExams =
       '${ApiConfig.baseUrl}${entranc_exam_api}/get_all';
-  static final String getEntranceExamDetails =
-      '${ApiConfig.baseUrl}${entranc_exam_api}/details';
+  static final String get_by_id =
+      '${ApiConfig.baseUrl}${entranc_exam_api}/get_by_id';
 }

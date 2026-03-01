@@ -4,7 +4,7 @@ import '../models/exam_question.dart';
 import '../models/exam_subject.dart';
 import '../models/exam_grade.dart';
 
-class ExamRepository {
+class ExamMocRepository {
   static List<ExamGrade> getGrades() {
     return [
       ExamGrade(

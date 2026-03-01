@@ -11,13 +11,15 @@ class DioConfig {
           connectTimeout: const Duration(seconds: 60 * 1000),
           receiveTimeout: const Duration(seconds: 60 * 1000),
           receiveDataWhenStatusError: true,
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          },
+          contentType: Headers.jsonContentType, // This is application/json
+          responseType: ResponseType.json,
+          // headers: {
+          //   'Accept': 'application/json',
+          //   'Content-Type': 'multipart/form-data',
+          // },
         ),
       ) {
-    _setupInterceptors();
+    // _setupInterceptors();
   }
   Dio get dio => _dio;
   Future<void> _setupInterceptors() async {
@@ -107,17 +109,17 @@ class ApiService {
     return await _dio.get(path, queryParameters: queryParameters);
   }
 
-  Future<Response> post(String path, dynamic data) async {
-    return await _dio.post(path, data: data);
+  Future<Response> post(String path, dynamic body) async {
+    return await _dio.post(path, data: body);
   }
 
-  Future<Response> postOptions(String path, dynamic data) async {
-    return await _dio.post(
-      path,
-      data: data,
-      options: Options(headers: {'Content-Type': 'application/json'}),
-    );
-  }
+  // Future<Response> postOptions(String path, dynamic data) async {
+  //   return await _dio.post(
+  //     path,
+  //     data: data,
+  //     options: Options(headers: {'Content-Type': 'application/json'}),
+  //   );
+  // }
 
   Future<Response> createAccountOptions(String path, dynamic data) async {
     return await _dio.post(
