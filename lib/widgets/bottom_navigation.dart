@@ -1,9 +1,9 @@
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/app/app_router.dart';
-import 'package:exam_practice_app/screen/book_mark.dart';
+import 'package:exam_practice_app/features/book_mark/book_mark.dart';
 import 'package:exam_practice_app/features/home/screens/home_page.dart';
-import 'package:exam_practice_app/screen/offline.dart';
-import 'package:exam_practice_app/screen/more_page.dart';
+import 'package:exam_practice_app/features/offline/offline.dart';
+import 'package:exam_practice_app/features/more/more_page.dart';
 import 'package:exam_practice_app/screen/alerts_page.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/app_drawer.dart';
