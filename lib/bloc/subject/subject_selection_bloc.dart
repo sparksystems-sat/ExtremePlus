@@ -1,6 +1,6 @@
 import 'package:exam_practice_app/bloc/subject/subject_selection_event.dart';
 import 'package:exam_practice_app/bloc/subject/subject_selection_state.dart';
-import 'package:exam_practice_app/repos/subject_repo.dart';
+import 'package:exam_practice_app/repository/subject/subject_selection_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SubjectctSelectionBloc

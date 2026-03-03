@@ -1,12 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:exam_practice_app/bloc/home/home_bloc.dart';
-import 'package:exam_practice_app/bloc/home/home_event.dart';
-import 'package:exam_practice_app/bloc/home/home_state.dart';
+
 import 'package:exam_practice_app/features/exam_practice/screens/subject_selection_screen.dart';
+import 'package:exam_practice_app/features/home/bloc/home/home_bloc.dart';
+import 'package:exam_practice_app/features/home/bloc/home/home_event.dart';
+import 'package:exam_practice_app/features/home/bloc/home/home_state.dart';
+import 'package:exam_practice_app/features/home/repositorys/home_repo.dart';
 import 'package:exam_practice_app/features/home/widgets/learning_card.dart';
 import 'package:exam_practice_app/features/home/widgets/gamification_card.dart';
 import 'package:exam_practice_app/features/short_notes/screens/subject_selection_screen.dart';
-import 'package:exam_practice_app/repos/home_repo.dart';
+
 import 'package:exam_practice_app/screen/grade_subject.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/subject_card_widget.dart';
@@ -190,7 +192,7 @@ class _HomePageState extends State<HomePage> {
           (context) =>
               HomeBloc(RepositoryProvider.of<HomeRepository>(context))
                 ..add(HomeInitialEvent()),
-      child:  BlocBuilder<HomeBloc, HomeState>(
+      child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return GridView.builder(
             shrinkWrap: true,
@@ -220,11 +222,6 @@ class _HomePageState extends State<HomePage> {
               );
             },
           );
-
-
-
-
-          
         },
       ),
     );

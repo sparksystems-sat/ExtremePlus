@@ -1,21 +1,20 @@
-import 'package:exam_practice_app/bloc/exam/exam_bloc.dart';
-import 'package:exam_practice_app/bloc/exam/exam_event.dart';
-import 'package:exam_practice_app/bloc/exam/exam_state.dart';
+import 'package:exam_practice_app/features/exam_practice/bloc/exam/exam_bloc.dart';
+import 'package:exam_practice_app/features/exam_practice/bloc/exam/exam_event.dart';
+import 'package:exam_practice_app/features/exam_practice/bloc/exam/exam_state.dart';
+import 'package:exam_practice_app/features/exam_practice/repositorys/exam_repo.dart';
+
 import 'package:exam_practice_app/features/exam_practice/screens/exam_result_screen.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/model/question_model.dart';
-import 'package:exam_practice_app/repos/exam_repo.dart';
 import 'package:exam_practice_app/widgets/medium_text.dart';
 import 'package:exam_practice_app/widgets/question_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:exam_practice_app/utility/appColors.dart';
 
 class PracticeExamScreen extends StatefulWidget {
   final String subjectId;
   final String subjectName;
-
   const PracticeExamScreen({
     super.key,
     required this.subjectId,
@@ -195,10 +194,9 @@ class _PracticeExamScreenState extends State<PracticeExamScreen> {
                       (showSubmitButton && selectedAnswers.isNotEmpty)
                           ? FloatingActionButton.extended(
                             onPressed: () {
-
-
                               context.read<ExamBloc>().add(
-                                ExamSubmitAnswerEvent(selectedAnswers));
+                                ExamSubmitAnswerEvent(selectedAnswers),
+                              );
                             },
                             backgroundColor: AppColors.button3Color,
                             label: const Text('Submit'),

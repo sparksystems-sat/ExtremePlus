@@ -1,11 +1,9 @@
-import 'package:exam_practice_app/bloc/grade/grade_bloc.dart';
-import 'package:exam_practice_app/bloc/grade/grade_event.dart';
-import 'package:exam_practice_app/bloc/grade/grade_state.dart';
+import 'package:exam_practice_app/bloc/grades/grade_selection_bloc.dart';
+import 'package:exam_practice_app/bloc/grades/grade_selection_state.dart';
 import 'package:exam_practice_app/bloc/subject/subject_selection_bloc.dart';
 import 'package:exam_practice_app/bloc/subject/subject_selection_event.dart';
 import 'package:exam_practice_app/model/home_page_layout.dart';
-import 'package:exam_practice_app/repos/grade_repo.dart';
-import 'package:exam_practice_app/repos/subject_repo.dart';
+import 'package:exam_practice_app/repository/subject/subject_selection_repo.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
@@ -50,11 +48,11 @@ class GradeSelectionScreen extends StatelessWidget {
             backgroundColor: AppColors.appbar_color,
             elevation: 0,
           ),
-          body: BlocBuilder<GradeBloc, GradeState>(
+          body: BlocBuilder<GradeSelectionBloc, GradeSelectionState>(
             builder: (context, state) {
-              if (state is GradeInitialState) {
+              if (state is GradeSelectionInitialState) {
                 return LoadingIndicator();
-              } else if (state is GradeSuccessState) {
+              } else if (state is GradeSelectionSuccessState) {
                 List<GradeModel> gradeModel = state.gradeModel;
                 return CustomScrollView(
                   slivers: [
@@ -110,7 +108,7 @@ class GradeSelectionScreen extends StatelessWidget {
                     ),
                   ],
                 );
-              } else if (state is GradeErrorState) {
+              } else if (state is GradeSelectionErrorState) {
                 return const Center(child: Text("Failed to load grades"));
               } else {
                 return LoadingIndicator();

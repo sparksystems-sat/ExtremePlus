@@ -1,10 +1,10 @@
-import 'package:exam_practice_app/bloc/grade/grade_state.dart';
 import 'package:exam_practice_app/bloc/subject/subject_selection_bloc.dart';
 import 'package:exam_practice_app/bloc/subject/subject_selection_event.dart';
 import 'package:exam_practice_app/bloc/subject/subject_selection_state.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/model/exam_grade.dart';
-import 'package:exam_practice_app/repos/subject_repo.dart';
+import 'package:exam_practice_app/repository/subject/subject_selection_repo.dart';
+
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/loading_indicator.dart';
 import 'package:exam_practice_app/widgets/medium_text.dart';
@@ -108,8 +108,8 @@ class SubjectSelectionScreen extends StatelessWidget {
                     ),
                   ],
                 );
-              } else if (state is GradeErrorState) {
-                return const Center(child: Text("Failed to load grades"));
+              } else if (state is SubjectctSelectionErrorState) {
+                return const Center(child: Text("Failed to load subjects"));
               } else {
                 return LoadingIndicator();
               }

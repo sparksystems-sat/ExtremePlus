@@ -1,13 +1,13 @@
+import 'package:exam_practice_app/features/home/repositorys/home_repo.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/app/app_router.dart';
-import 'package:exam_practice_app/repos/home_repo.dart';
 import 'package:exam_practice_app/services/local_notifications.dart';
 import 'package:exam_practice_app/features/timer/services/study_timer_service.dart';
 import 'package:exam_practice_app/utility/appTheme.dart';
 import 'package:exam_practice_app/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
+
 import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
