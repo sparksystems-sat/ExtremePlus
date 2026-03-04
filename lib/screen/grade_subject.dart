@@ -1,10 +1,7 @@
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/screen/learning_page.dart';
-import 'package:exam_practice_app/widgets/big_text.dart';
-import 'package:exam_practice_app/widgets/grade_subject_container.dart';
 import 'package:exam_practice_app/widgets/subject_card_general.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class GradeSubjectPage extends StatefulWidget {

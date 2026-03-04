@@ -1,24 +1,19 @@
+import 'package:exam_practice_app/features/alert/alert_page.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/app/app_router.dart';
 import 'package:exam_practice_app/features/book_mark/book_mark.dart';
 import 'package:exam_practice_app/features/home/screens/home_page.dart';
 import 'package:exam_practice_app/features/offline/offline.dart';
 import 'package:exam_practice_app/features/more/more_page.dart';
-import 'package:exam_practice_app/screen/alerts_page.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
 import 'package:exam_practice_app/widgets/app_drawer.dart';
-
 import 'package:animated_background/animated_background.dart';
-
 import 'package:flutter/material.dart';
-
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
-
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
 }
-
 class _BottomNavigationState extends State<BottomNavigation>
     with TickerProviderStateMixin {
   final ParticleOptions _particles = ParticleOptions(
@@ -105,7 +100,7 @@ class _BottomNavigationState extends State<BottomNavigation>
             case 3:
               return const MorePage();
             case 4:
-              return const AlertsPage();
+              return const AlertPage();
             default:
               return const HomePage();
           }

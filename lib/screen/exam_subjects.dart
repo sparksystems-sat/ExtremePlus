@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:exam_practice_app/widgets/subject_card.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 
-import 'package:exam_practice_app/screen/exam_page.dart';
+
 
 class ExamSubjectsPage extends StatefulWidget {
   const ExamSubjectsPage({Key? key}) : super(key: key);
@@ -92,10 +92,7 @@ class _ExamSubjectsPageState extends State<ExamSubjectsPage> {
                 final subject = subjects[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => QuizPage()),
-                    );
+                    
                   },
                   child: SubjectCardExam(
                     subjectName: subject["name"] as String,

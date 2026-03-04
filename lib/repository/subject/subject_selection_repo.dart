@@ -11,9 +11,7 @@ class SubjectSelectionRepository {
         EntranceExamEndpoint.getEntranceExams,
         null,
       );
-
       List rep_list = response.data['data'] as List;
-
       return rep_list.map(((e) => ExamGradeModel.fromJson(e))).toList();
     } catch (e) {
       print("============== subject Seelction error ===============");
