@@ -8,7 +8,7 @@ class SubjectSelectionRepository {
   Future<List<ExamGradeModel>> getSubjectData() async {
     try {
       Response response = await ApiConfig.dio.post(
-        EntranceExamEndpoint.getEntranceExams,
+        EntranceExamEndpoint.get_entrance_exams,
         null,
       );
       List rep_list = response.data['data'] as List;

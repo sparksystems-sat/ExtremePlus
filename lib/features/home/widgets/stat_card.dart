@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class StatCard extends StatelessWidget {
   final String label;
   final String value;
-
   const StatCard({super.key, required this.label, required this.value});
 
   @override

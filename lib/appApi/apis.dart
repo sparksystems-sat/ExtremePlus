@@ -35,8 +35,10 @@ class ChapterEndpoint {
 }
 
 class EntranceExamEndpoint {
-  static final String getEntranceExams =
+  static final String get_entrance_exams =
       '${ApiConfig.baseUrl}${entranc_exam_api}/get_all';
+  static final String submit_entrance_exam_answers =
+      '${ApiConfig.baseUrl}${entranc_exam_api}/submit_answers';
   static final String get_by_id =
       '${ApiConfig.baseUrl}${entranc_exam_api}/get_by_id';
 }

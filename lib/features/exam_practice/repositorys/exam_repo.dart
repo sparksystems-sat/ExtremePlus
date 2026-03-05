@@ -26,23 +26,19 @@ class ExamRepository {
     }
   }
 
-  Future<List<QuestionModel>> submitExamAnswer(String subjectId) async {
+  Future submitExamAnswer(String subjectId, Map<String, dynamic> answers) async {
     try {
-      var formData = {
-        "includes": ["questions.options"],
-      };
+      var formData = {answers};
 
       Response response = await ApiConfig.dio.post(
-        "${EntranceExamEndpoint.get_by_id}/$subjectId",
+        "${EntranceExamEndpoint.submit_entrance_exam_answers}/$subjectId",
         jsonEncode(formData),
       );
       List dataList = response.data['data']['questions'] as List;
-      return dataList.map((e) => QuestionModel.fromJson(e)).toList();
     } catch (e) {
       debugPrint("============== exam error ===============");
       debugPrint(e.toString());
       debugPrint("============== exam error ===============");
-      return [];
     }
   }
 }
