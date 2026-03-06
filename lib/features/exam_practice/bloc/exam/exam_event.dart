@@ -12,9 +12,10 @@ class ExamInitialEvent extends ExamEvent {
 }
 
 class ExamSubmitAnswerEvent extends ExamEvent {
-  final Map<String, int> selectedAnswers;
+  final Map<String, dynamic> selectedAnswers;
+  final String subjectId;
 
-  const ExamSubmitAnswerEvent(this.selectedAnswers);
+  const ExamSubmitAnswerEvent(this.subjectId, this.selectedAnswers);
 
   @override
   List<Object?> get props => [selectedAnswers];

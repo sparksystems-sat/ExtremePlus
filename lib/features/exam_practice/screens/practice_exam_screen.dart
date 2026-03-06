@@ -6,11 +6,13 @@ import 'package:exam_practice_app/features/exam_practice/repositorys/exam_repo.d
 import 'package:exam_practice_app/features/exam_practice/screens/exam_result_screen.dart';
 import 'package:exam_practice_app/l10n/language_constants.dart';
 import 'package:exam_practice_app/model/question_model.dart';
+import 'package:exam_practice_app/widgets/big_text.dart';
 import 'package:exam_practice_app/widgets/medium_text.dart';
 import 'package:exam_practice_app/widgets/question_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:exam_practice_app/utility/appColors.dart';
+import 'package:uuid/uuid.dart';
 
 class PracticeExamScreen extends StatefulWidget {
   final String subjectId;
@@ -133,10 +135,10 @@ class _PracticeExamScreenState extends State<PracticeExamScreen> {
         child: Scaffold(
           backgroundColor: AppColors.main_background_color,
           appBar: AppBar(
-            title: medium_text_page(
-              textValue: widget.subjectName + t(context).practice_exam,
+            title: big_text_page(
+              text_value: '${widget.subjectName}  ${t(context).practice_exam}',
             ),
-            centerTitle: true,
+            centerTitle: false,
             leading: IconButton(
               icon: const Icon(
                 Icons.chevron_left,
@@ -178,12 +180,29 @@ class _PracticeExamScreenState extends State<PracticeExamScreen> {
                           isInstantAnswerEnabled: isInstantAnswerEnabled,
                           showExplanation:
                               showExplanation[question.id] ?? false,
-                          onSelectAnswer:
-                              (optionIndex) => _selectAnswer(
-                                question,
-                                question.id,
-                                optionIndex,
+                          onSelectAnswer: (optionIndex) {
+                            _selectAnswer(question, question.id, optionIndex);
+
+                            var uuid = Uuid();
+                            var selected_ansewers = {
+                              "selected_option_label":
+                                  question.options[optionIndex].option_label,
+                              "is_correct":
+                                  question.options[optionIndex].is_correct,
+                              "answered_at": DateTime.now().toIso8601String(),
+                              "student_id": uuid.v4(),
+                              "exam_question_id":
+                                  question
+                                      .options[optionIndex]
+                                      .exam_question_id,
+                            };
+                            context.read<ExamBloc>().add(
+                              ExamSubmitAnswerEvent(
+                                widget.subjectId,
+                                selected_ansewers,
                               ),
+                            );
+                          },
                           onToggleExplanation:
                               () => _toggleExplanation(question.id.toString()),
                         ),
@@ -195,7 +214,7 @@ class _PracticeExamScreenState extends State<PracticeExamScreen> {
                           ? FloatingActionButton.extended(
                             onPressed: () {
                               context.read<ExamBloc>().add(
-                                ExamSubmitAnswerEvent(selectedAnswers),
+                                ExamSubmitAnswerEvent("", {}),
                               );
                             },
                             backgroundColor: AppColors.button3Color,

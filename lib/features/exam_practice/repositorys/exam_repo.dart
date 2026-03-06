@@ -26,19 +26,26 @@ class ExamRepository {
     }
   }
 
-  Future submitExamAnswer(String subjectId, Map<String, dynamic> answers) async {
+  Future submitExamAnswer(
+    String subjectId,
+    Map<String, dynamic> answers,
+  ) async {
     try {
       var formData = {answers};
 
       Response response = await ApiConfig.dio.post(
-        "${EntranceExamEndpoint.submit_entrance_exam_answers}/$subjectId",
-        jsonEncode(formData),
+        "${SubmitExamAnswerEndpoint.submit_entrance_exam_answers}",
+        answers,
       );
-      List dataList = response.data['data']['questions'] as List;
+      debugPrint("============== exam submit answer response ===============");
+      debugPrint(response.statusCode.toString());
+      debugPrint(response.data.toString());
+      debugPrint("============== exam submit answer response ===============");
     } catch (e) {
-      debugPrint("============== exam error ===============");
+      debugPrint("============== exam submit answer ===============");
+      debugPrint(answers.toString());
       debugPrint(e.toString());
-      debugPrint("============== exam error ===============");
+      debugPrint("============== exam submit answer ===============");
     }
   }
 }

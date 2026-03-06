@@ -5,6 +5,7 @@ final subject_api = 'Subjects';
 final grade_api = 'Grades';
 final chapter_api = 'Chapters';
 final entranc_exam_api = 'EntranceExamSubjectss';
+final student_answer_api = 'StudentAnswers';
 
 class StudentEndpoint {
   static final String getCourses = '${ApiConfig.baseUrl}${student_api}/get_all';
@@ -41,4 +42,9 @@ class EntranceExamEndpoint {
       '${ApiConfig.baseUrl}${entranc_exam_api}/submit_answers';
   static final String get_by_id =
       '${ApiConfig.baseUrl}${entranc_exam_api}/get_by_id';
+}
+
+class SubmitExamAnswerEndpoint {
+  static final String submit_entrance_exam_answers =
+      '${ApiConfig.baseUrl}${student_answer_api}/create';
 }

@@ -2,7 +2,6 @@ import 'package:exam_practice_app/features/exam_practice/bloc/exam/exam_event.da
 import 'package:exam_practice_app/features/exam_practice/bloc/exam/exam_state.dart';
 import 'package:exam_practice_app/features/exam_practice/repositorys/exam_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 class ExamBloc extends Bloc<ExamEvent, ExamState> {
   final ExamRepository exam_repo;
   final String subjectId;
@@ -17,12 +16,11 @@ class ExamBloc extends Bloc<ExamEvent, ExamState> {
       }
     });
     on<ExamSubmitAnswerEvent>((event, emit) async {
-      emit(ExamInitialState());
       try {
-        final exam_selected_data = await exam_repo.submitExamAnswer(subjectId, {
-          "answers": "",
-        });
-        emit(ExamSubmitAnswerState(exam_selected_data));
+        await exam_repo.submitExamAnswer(
+          event.subjectId,
+          event.selectedAnswers,
+        );
       } catch (e) {
         emit(ExamErrorState());
       }

@@ -55,6 +55,7 @@ class _AppBarState extends State<App_Bar> {
     // final language_switch = context.read<LanguagSwitch>();
     return SliverAppBar(
       // expandedHeight: 150.0,
+      backgroundColor: AppColors.primaryColor,
       elevation: 1.0,
       floating: false,
       title: big_text_page(text_value: t(context).appName),
