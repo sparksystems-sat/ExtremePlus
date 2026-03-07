@@ -166,7 +166,6 @@ class _PracticeExamScreenState extends State<PracticeExamScreen> {
                       if (index == 0) {
                         return _buildHeader(totalQuestions);
                       }
-
                       final question = questions[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(
@@ -182,9 +181,8 @@ class _PracticeExamScreenState extends State<PracticeExamScreen> {
                               showExplanation[question.id] ?? false,
                           onSelectAnswer: (optionIndex) {
                             _selectAnswer(question, question.id, optionIndex);
-
                             var uuid = Uuid();
-                            var selected_ansewers = {
+                            var selected_answers = {
                               "selected_option_label":
                                   question.options[optionIndex].option_label,
                               "is_correct":
@@ -197,9 +195,9 @@ class _PracticeExamScreenState extends State<PracticeExamScreen> {
                                       .exam_question_id,
                             };
                             context.read<ExamBloc>().add(
-                              ExamSubmitAnswerEvent(
+                              ExamSubmitSingleAnswerEvent(
                                 widget.subjectId,
-                                selected_ansewers,
+                                selected_answers,
                               ),
                             );
                           },
@@ -214,7 +212,7 @@ class _PracticeExamScreenState extends State<PracticeExamScreen> {
                           ? FloatingActionButton.extended(
                             onPressed: () {
                               context.read<ExamBloc>().add(
-                                ExamSubmitAnswerEvent("", {}),
+                                ExamSubmitBulkAnswerEvent("", {}),
                               );
                             },
                             backgroundColor: AppColors.button3Color,
@@ -252,26 +250,14 @@ class _PracticeExamScreenState extends State<PracticeExamScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: Text(
-              'Question $answeredCount / $totalQuestions',
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-                color: Colors.black,
-              ),
+            child: medium_text_page(
+              textValue: 'Question $answeredCount / $totalQuestions',
             ),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Instant Answer',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: Colors.black,
-                ),
-              ),
+              medium_text_page(textValue: 'Instant Answer'),
               const SizedBox(width: 10),
               Transform.scale(
                 scale: 0.95,

@@ -26,15 +26,13 @@ class ExamRepository {
     }
   }
 
-  Future submitExamAnswer(
+  Future submitExamSingleAnswer(
     String subjectId,
     Map<String, dynamic> answers,
   ) async {
     try {
-      var formData = {answers};
-
       Response response = await ApiConfig.dio.post(
-        "${SubmitExamAnswerEndpoint.submit_entrance_exam_answers}",
+        SubmitExamAnswerEndpoint.submit_entrance_exam_single_answer,
         answers,
       );
       debugPrint("============== exam submit answer response ===============");
@@ -44,6 +42,45 @@ class ExamRepository {
     } catch (e) {
       debugPrint("============== exam submit answer ===============");
       debugPrint(answers.toString());
+      debugPrint(e.toString());
+      debugPrint("============== exam submit answer ===============");
+    }
+  }
+
+  Future submitExamBulkAnswer(
+    String subjectId,
+    Map<String, dynamic> answers,
+  ) async {
+    try {
+      Response response = await ApiConfig.dio.post(
+        SubmitExamAnswerEndpoint.bulk_submit_answers,
+        answers,
+      );
+      debugPrint("============== exam submit answer response ===============");
+      debugPrint(response.statusCode.toString());
+      debugPrint(response.data.toString());
+      debugPrint("============== exam submit answer response ===============");
+    } catch (e) {
+      debugPrint("============== exam submit answer ===============");
+      debugPrint(answers.toString());
+      debugPrint(e.toString());
+      debugPrint("============== exam submit answer ===============");
+    }
+  }
+
+  Future clearAnswer(String subjectId) async {
+    try {
+      Response response = await ApiConfig.dio.post(
+        SubmitExamAnswerEndpoint.clear_answers + subjectId,
+        null,
+      );
+      debugPrint("============== exam submit answer response ===============");
+      debugPrint(response.statusCode.toString());
+      debugPrint(response.data.toString());
+      debugPrint("============== exam submit answer response ===============");
+    } catch (e) {
+      debugPrint("============== exam submit answer ===============");
+
       debugPrint(e.toString());
       debugPrint("============== exam submit answer ===============");
     }

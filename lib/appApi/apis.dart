@@ -45,6 +45,10 @@ class EntranceExamEndpoint {
 }
 
 class SubmitExamAnswerEndpoint {
-  static final String submit_entrance_exam_answers =
+  static final String submit_entrance_exam_single_answer =
       '${ApiConfig.baseUrl}${student_answer_api}/create';
+  static final String bulk_submit_answers =
+      '${ApiConfig.baseUrl}${student_answer_api}/bulk_create';
+  static final String clear_answers =
+      '${ApiConfig.baseUrl}${student_answer_api}/clear_all_by_student_id/';
 }
